@@ -484,13 +484,13 @@ html {
 
 .modal-dialog-custom {
     background-color: #1a1a1a;
-    border: 2px solid #ffcc00; /* Ngjyra Gold/Verdhë */
+    border: 2px solid #d60000; /* Ngjyra Gold/Verdhë */
     border-radius: 15px;
     width: 90%;
     max-width: 500px;
     padding: 25px;
     position: relative;
-    box-shadow: 0 0 25px rgba(255, 204, 0, 0.2);
+    box-shadow: 0 0 25px rgb(222, 0, 0);
     animation: fadeIn 0.3s ease-out;
 }
 
@@ -504,7 +504,7 @@ html {
 }
 
 .modal-header-custom h2 {
-    color: #ffcc00;
+    color: #d40000;
     margin: 0;
     font-size: 1.5rem;
 }
@@ -519,7 +519,7 @@ html {
 }
 
 .btn-close-custom:hover {
-    color: #ffcc00;
+    color: #eb0000d5;
 }
 
 .modal-body-custom p {
@@ -563,7 +563,7 @@ html {
 /* Dritarja që zmadhohet */
 .modal-dialog-custom {
     background: #111;
-    border: 1px solid rgba(255, 204, 0, 0.5);
+    border: 1px solid rgba(246, 8, 0, 0.5);
     border-radius: 20px;
     width: 90%;
     max-width: 450px;
@@ -584,7 +584,7 @@ html {
 }
 
 .modal-header-custom h2 {
-    color: #a20c0c; /* Gold */
+    color: #eeeeee; /* Gold */
     font-size: 2rem;
     letter-spacing: 2px;
     margin-bottom: 10px;
@@ -595,14 +595,14 @@ html {
     margin-bottom: 8px;
     padding: 10px;
     border-radius: 10px;
-    border-left: 3px solid rgb(103, 0, 0);;
+    border-left: 3px solid rgb(255, 255, 255);
     color: #fff;
     list-style: none;
 }
 
 .btn-regjistro-modal {
     display: block;
-    background-color: #ffcc00;
+    background-color:rgb(255, 255, 255);;
     color: #000;
     text-align: center;
     padding: 12px;
