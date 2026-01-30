@@ -10,15 +10,19 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// 2. Efekti Fade In për elementet
+// 2. Dërgimi i Formës me AJAX (I bashkuar)
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registrationForm');
+    
     if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("Butoni u shtyp!"); // Kjo do të vërtetojë nëse punon
             
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true; 
+
             let formData = new FormData(this);
+
             fetch('/regjistro', {
                 method: 'POST',
                 body: formData
@@ -26,9 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 alert(data.message);
+                submitBtn.disabled = false;
                 this.reset();
             })
-            .catch(err => console.error(err));
+            .catch(error => {
+                submitBtn.disabled = false;
+                console.error('Gabim:', error);
+            });
         });
     }
 });
@@ -42,54 +50,29 @@ function updatePlanName(planName) {
     if (planInput) planInput.value = planName; 
 }
 
-// 4. Dërgimi i Formës me AJAX (Fetch)
-const regForm = document.getElementById('registrationForm');
-if (regForm) {
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const submitBtn = this.querySelector('button[type="submit"]');
-    submitBtn.disabled = true; // Çaktivizon butonin që të mos shtypet përsëri
-
-    let formData = new FormData(this);
-
-    fetch('/regjistro', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        submitBtn.disabled = false; // E aktivizon përsëri pas përgjigjes
-        this.reset();
-    })
-    .catch(error => {
-        submitBtn.disabled = false;
-        console.error('Gabim:', error);
-    });
-});
-}
-
+// 4. Detajet e Shërbimeve (Modal)
 const serviceDetails = {
     'body': {
         title: 'Bodybuilding',
-        text: 'Programi ynë i bodybuilding është krijuar për ata që duan rezultate maksimale në rritjen e masës muskulore.',
-        points: ['Pajisje moderne Hammer Strength', 'Instruktorë kampionë', 'Plane specifike ushqimore']
+        text: 'Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale, i pajisur me teknologjinë më të fundit për izolimin e muskujve.',
+        points: ['Hapësirë e dedikuar për pesha të lira deri në 150kg', 'Makineri profesionale të markave Panatta dhe Hammer Strength', 'Konsulta falas për suplementet dhe proteinat' , 'Ambient i monitoruar për siguri maksimale gjatë stërvitjes']
     },
     'cross': {
         title: 'Crossfit',
-        text: 'Një disiplinë që kombinon forcën, gjimnastikën dhe qëndrueshmërinë kardiovaskulare.',
-        points: ['Klasa në grup çdo orë', 'Trajnerë të certifikuar', 'Komunitet motivues']
+        text: 'Një Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë. Programet tona të Crossfit janë të dizajnuara për të rritur performancën tuaj atletike në kohë rekord. që kombinon forcën, gjimnastikën dhe qëndrueshmërinë kardiovaskulare.',
+        points: ['Plan ushqimor i personalizuar bazuar në metabolizmin tuaj.', 'Klasa në grup me energji të lartë dhe muzikë motivuese', 'Trajnerë të certifikuar që korrigjojnë teknikën në çdo lëvizje.' ,'Komunitet motivues']
     },
     'personal': {
         title: 'Trajnim Personal',
-        text: 'Nëse kërkoni vëmendje 1-me-1 dhe një plan fiks për trupin tuaj.',
-        points: ['Vlerësim fillestar i trupit', 'Monitorim 24/7', 'Arritje e qëllimeve 2x më shpejt']
+        text: 'Nuk ka rrugë të shkurtra, por ka rrugë më të zgjuara. Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet që dëshironi të arrini.',
+        points: ['Plan ushqimor i personalizuar bazuar në metabolizmin tuaj.', 'Program stërvitor unik për qëllimet tuaja (rënie në peshë ose rritje mase).', 'Fleksibilitet me oraret sipas nevojave tuaja ditore.']
     }
 };
 
 function openModal(type) {
     const data = serviceDetails[type];
+    const modal = document.getElementById('serviceModal');
+    
     document.getElementById('modalTitle').innerText = data.title;
     document.getElementById('modalText').innerText = data.text;
     
@@ -97,9 +80,27 @@ function openModal(type) {
     data.points.forEach(point => listHTML += `<li>✅ ${point}</li>`);
     document.getElementById('modalList').innerHTML = listHTML;
     
-    document.getElementById('serviceModal').style.display = 'flex';
+    modal.style.display = 'flex';
+    
+    // Vonesë 10ms që animacioni të fillojë pasi të shfaqet dritarja
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
 }
 
 function closeModal() {
-    document.getElementById('serviceModal').style.display = 'none';
+    const modal = document.getElementById('serviceModal');
+    modal.classList.remove('active');
+    
+    // Prisni sa të mbarojë animacioni para se ta fshihni plotësisht
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 400);
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('serviceModal');
+    if (event.target == modal) {
+        closeModal();
+    }
 }

@@ -87,7 +87,7 @@
     </div> -->
     </header>
 
-    <script src="js/gym.js">
+    <!-- <script src="static/js/gym.js"> -->
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -97,54 +97,54 @@
                 <h2 class="display-4 fw-bold text-uppercase text-white">Shërbimet Elite</h2>
                 <div class="header-line mx-auto bg-white"></div>
             </div>
-<!-- fillon sherbimet -->
-            <div class="row g-3">
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-item">
-                        <img src="{{ url_for('static', filename='images/gym5.jpg') }}" alt="Bodybuilding">
-                        <a href="javascript:void(0)" onclick="openModal('body')" class="...">MË SHUMË →</a>
-                        <div class="service-overlay">
-                            <div class="service-content">
-                                <h3 class="text-uppercase fw-bold">Bodybuilding</h3>
-                                <p>Transformo trupin tënd me pajisjet tona të fjalës së fundit.</p>
-                                <a href="#" class="btn btn-link text-white text-decoration-none p-0 fw-bold">MË SHUMË
-                                    →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-item">
-                        <img src="{{ url_for('static', filename='images/gym1.jpg') }}" alt="Crossfit">
-                        <a href="javascript:void(0)" onclick="openModal('cross')" class="...">MË SHUMË →</a>
-                        <div class="service-overlay">
-                            <div class="service-content">
-                                <h3 class="text-uppercase fw-bold">Crossfit</h3>
-                                <p>Sfidoni limitet tuaja me programe intensive forca dhe kondicioni.</p>
-                                <a href="#" class="btn btn-link text-white text-decoration-none p-0 fw-bold">MË SHUMË
-                                    →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-item">
-                        <img src="{{ url_for('static', filename='images/gym2.jpg') }}" alt="personal trainer ">
-                        <a href="javascript:void(0)" onclick="openModal('personal')" class="...">MË SHUMË →</a>
-                        <div class="service-overlay">
-                            <div class="service-content">
-                                <h3 class="text-uppercase fw-bold">Trajnim Personal</h3>
-                                <p>Arritni qëllimet tuaja më shpejt me ndihmën e ekspertëve tanë.</p>
-                                <a href="#" class="btn btn-link text-white text-decoration-none p-0 fw-bold">MË SHUMË
-                                    →</a>
-                            </div>
-                        </div>
-                    </div>
+            <!-- fillon sherbimet -->
+<div class="row g-3">
+    <div class="col-lg-4 col-md-6">
+        <div class="service-item">
+            <img src="{{ url_for('static', filename='images/gym5.jpg') }}" alt="Bodybuilding">
+            <div class="service-overlay">
+                <div class="service-content">
+                    <h3 class="text-uppercase fw-bold">Bodybuilding</h3>
+                    <p>Transformo trupin tënd me pajisjet tona të fjalës së fundit.</p>
+                    <a href="javascript:void(0)" onclick="openModal('body')" class="btn btn-link text-white text-decoration-none p-0 fw-bold">
+                        MË SHUMË →
+                    </a>
                 </div>
             </div>
-<!-- mbyllen sherbimet -->
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+        <div class="service-item">
+            <img src="{{ url_for('static', filename='images/gym1.jpg') }}" alt="Crossfit">
+            <div class="service-overlay">
+                <div class="service-content">
+                    <h3 class="text-uppercase fw-bold">Crossfit</h3>
+                    <p>Sfidoni limitet tuaja me programe intensive forca dhe kondicioni.</p>
+                    <a href="javascript:void(0)" onclick="openModal('cross')" class="btn btn-link text-white text-decoration-none p-0 fw-bold">
+                        MË SHUMË →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+        <div class="service-item">
+            <img src="{{ url_for('static', filename='images/gym2.jpg') }}" alt="personal trainer">
+            <div class="service-overlay">
+                <div class="service-content">
+                    <h3 class="text-uppercase fw-bold">Trajnim Personal</h3>
+                    <p>Arritni qëllimet tuaja më shpejt me ndihmën e ekspertëve tanë.</p>
+                    <a href="javascript:void(0)" onclick="openModal('personal')" class="btn btn-link text-white text-decoration-none p-0 fw-bold">
+                        MË SHUMË →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- mbyllen sherbimet -->
 
         </div>
     </section>
@@ -273,7 +273,7 @@
                         <li class="mb-3"><i class="bi bi-envelope-fill me-2 text-danger"></i> info@fusiongym.al</li>
                     </ul>
                     <div class="footer-socials-left mt-4">
-                        <a href="https://www.instagram.com/fusion_gym_fitness_al/" target="_blank" class="insta-box">
+                        <a href="https://www.instagram.com/fusiongym.al/" target="_blank" class="insta-box">
                             <i class="bi bi-instagram"></i>
                         </a>
                     </div>
@@ -342,19 +342,19 @@
         </div>
     </div>
     </div>
-    <script src="{{ url_for('static', filename='js/gym.js') }}"></script>
     <div id="serviceModal" class="modal-custom">
-    <div class="modal-dialog-custom">
-        <div class="modal-header-custom">
-            <h2 id="modalTitle" class="fw-bold text-uppercase"></h2>
-            <button onclick="closeModal()" class="btn-close-custom">&times;</button>
-        </div>
-        <div class="modal-body-custom">
-            <p id="modalText"></p>
-            <ul id="modalList"></ul>
+        <div class="modal-dialog-custom">
+            <div class="modal-header-custom">
+                <h2 id="modalTitle" class="fw-bold text-uppercase"></h2>
+                <button onclick="closeModal()" class="btn-close-custom">&times;</button>
+            </div>
+            <div class="modal-body-custom">
+                <p id="modalText"></p>
+                <ul id="modalList"></ul>
+            </div>
         </div>
     </div>
-</div>
+    <script src="{{ url_for('static', filename='js/gym.js') }}"></script>
 </body>
 
 </html>
