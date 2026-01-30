@@ -457,3 +457,90 @@ html {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     border-color: #ff0000 !important;
 }
+
+.service-card img {
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Stilimi i Modal-it (Dritares) */
+.modal-custom {
+    display: none; /* E fshehur fillimisht */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Sfond i zi transparent */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); /* Efekt mjegullimi pas dritares */
+}
+
+.modal-dialog-custom {
+    background-color: #1a1a1a;
+    border: 2px solid #ffcc00; /* Ngjyra Gold/Verdhë */
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    position: relative;
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.modal-header-custom h2 {
+    color: #ffcc00;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.btn-close-custom {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.btn-close-custom:hover {
+    color: #ffcc00;
+}
+
+.modal-body-custom p {
+    color: #ddd;
+    line-height: 1.6;
+}
+
+.modal-body-custom ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.modal-body-custom li {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+/* Animacioni për hapjen */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

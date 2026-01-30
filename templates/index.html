@@ -97,11 +97,12 @@
                 <h2 class="display-4 fw-bold text-uppercase text-white">Shërbimet Elite</h2>
                 <div class="header-line mx-auto bg-white"></div>
             </div>
-
+<!-- fillon sherbimet -->
             <div class="row g-3">
                 <div class="col-lg-4 col-md-6">
                     <div class="service-item">
                         <img src="{{ url_for('static', filename='images/gym5.jpg') }}" alt="Bodybuilding">
+                        <a href="javascript:void(0)" onclick="openModal('body')" class="...">MË SHUMË →</a>
                         <div class="service-overlay">
                             <div class="service-content">
                                 <h3 class="text-uppercase fw-bold">Bodybuilding</h3>
@@ -116,6 +117,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="service-item">
                         <img src="{{ url_for('static', filename='images/gym1.jpg') }}" alt="Crossfit">
+                        <a href="javascript:void(0)" onclick="openModal('cross')" class="...">MË SHUMË →</a>
                         <div class="service-overlay">
                             <div class="service-content">
                                 <h3 class="text-uppercase fw-bold">Crossfit</h3>
@@ -130,6 +132,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="service-item">
                         <img src="{{ url_for('static', filename='images/gym2.jpg') }}" alt="personal trainer ">
+                        <a href="javascript:void(0)" onclick="openModal('personal')" class="...">MË SHUMË →</a>
                         <div class="service-overlay">
                             <div class="service-content">
                                 <h3 class="text-uppercase fw-bold">Trajnim Personal</h3>
@@ -141,6 +144,8 @@
                     </div>
                 </div>
             </div>
+<!-- mbyllen sherbimet -->
+
         </div>
     </section>
 
@@ -338,6 +343,18 @@
     </div>
     </div>
     <script src="{{ url_for('static', filename='js/gym.js') }}"></script>
+    <div id="serviceModal" class="modal-custom">
+    <div class="modal-dialog-custom">
+        <div class="modal-header-custom">
+            <h2 id="modalTitle" class="fw-bold text-uppercase"></h2>
+            <button onclick="closeModal()" class="btn-close-custom">&times;</button>
+        </div>
+        <div class="modal-body-custom">
+            <p id="modalText"></p>
+            <ul id="modalList"></ul>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

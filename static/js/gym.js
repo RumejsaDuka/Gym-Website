@@ -69,3 +69,37 @@ form.addEventListener('submit', function(e) {
     });
 });
 }
+
+const serviceDetails = {
+    'body': {
+        title: 'Bodybuilding',
+        text: 'Programi ynë i bodybuilding është krijuar për ata që duan rezultate maksimale në rritjen e masës muskulore.',
+        points: ['Pajisje moderne Hammer Strength', 'Instruktorë kampionë', 'Plane specifike ushqimore']
+    },
+    'cross': {
+        title: 'Crossfit',
+        text: 'Një disiplinë që kombinon forcën, gjimnastikën dhe qëndrueshmërinë kardiovaskulare.',
+        points: ['Klasa në grup çdo orë', 'Trajnerë të certifikuar', 'Komunitet motivues']
+    },
+    'personal': {
+        title: 'Trajnim Personal',
+        text: 'Nëse kërkoni vëmendje 1-me-1 dhe një plan fiks për trupin tuaj.',
+        points: ['Vlerësim fillestar i trupit', 'Monitorim 24/7', 'Arritje e qëllimeve 2x më shpejt']
+    }
+};
+
+function openModal(type) {
+    const data = serviceDetails[type];
+    document.getElementById('modalTitle').innerText = data.title;
+    document.getElementById('modalText').innerText = data.text;
+    
+    let listHTML = '';
+    data.points.forEach(point => listHTML += `<li>✅ ${point}</li>`);
+    document.getElementById('modalList').innerHTML = listHTML;
+    
+    document.getElementById('serviceModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('serviceModal').style.display = 'none';
+}
