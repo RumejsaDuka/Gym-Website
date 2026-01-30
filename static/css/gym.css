@@ -599,3 +599,26 @@ html {
     color: #fff;
     list-style: none;
 }
+
+.btn-regjistro-modal {
+    display: block;
+    background-color: #ffcc00;
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-regjistro-modal:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Kjo bën që faqja të rrëshqasë bukur dhe jo të kërcejë */
+html {
+    scroll-behavior: smooth;
+}

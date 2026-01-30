@@ -78,6 +78,8 @@ function openModal(type) {
     
     let listHTML = '';
     data.points.forEach(point => listHTML += `<li>✅ ${point}</li>`);
+// regjistrohu tani te shkoj te kontankti 
+    listHTML += `<br><a href="#contact" onclick="closeModal()" class="btn-regjistro-modal">REGJISTROHU TANI</a>`;
     document.getElementById('modalList').innerHTML = listHTML;
     
     modal.style.display = 'flex';
