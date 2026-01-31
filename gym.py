@@ -11,10 +11,10 @@ load_dotenv()
 app = Flask(__name__)
 
 # --- FUNKSIONI PËR DËRGIMIN E EMAIL-IT ---
+# --- FUNKSIONI I PËRDITËSUAR PËR DËRGIMIN E EMAIL-IT ---
 def dergo_email_njoftimi(emri, telefoni, paketa):
     msg = EmailMessage()
     
-    # Versioni HTML për një pamje më profesionale
     html_content = f"""
     <html>
         <body style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
@@ -29,20 +29,23 @@ def dergo_email_njoftimi(emri, telefoni, paketa):
         </body>
     </html>
     """
-    msg.set_content(f"Regjistrim i ri: {emri}, Tel: {telefoni}, Paketa: {paketa}") # Fallback tekst
+    msg.set_content(f"Regjistrim i ri: {emri}, Tel: {telefoni}, Paketa: {paketa}")
     msg.add_alternative(html_content, subtype='html')
     
     msg['Subject'] = f'🔔 Klient i ri: {emri}'
     msg['From'] = os.getenv('EMAIL_USER')
-    msg['To'] = 'rumejsaduka0@gmail.com' # Email-i ku do vijnë njoftimet
+    msg['To'] = 'rumejsaduka0@gmail.com'
 
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        # Ndryshimi kryesor: Përdorim portën 587 dhe timeout
+        with smtplib.SMTP('smtp.gmail.com', 587, timeout=15) as smtp:
+            smtp.starttls()  # Siguron lidhjen
             smtp.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
             smtp.send_message(msg)
         print("✅ Email-i u dërgua me sukses!")
     except Exception as e:
-        print(f"❌ Gabim gjatë dërgimit të email-it: {e}")
+        # Kjo parandalon që gabimi i email-it të bllokojë regjistrimin në website
+        print(f"❌ Gabim teknik me email-in: {e}")
 
 # --- DATABASE ---
 def init_db():
