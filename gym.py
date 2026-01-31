@@ -17,19 +17,15 @@ def dergo_email_njoftimi(emri, telefoni, paketa):
     
     html_content = f"""
     <html>
-        <body style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
+        <body style="font-family: Arial, sans-serif; padding: 20px;">
             <h2 style="color: #d32f2f;">Fusion Gym - Regjistrim i Ri!</h2>
-            <p>Ju keni një aplikim të ri nga faqja juaj e internetit:</p>
-            <hr>
             <p><strong>Emri:</strong> {emri}</p>
             <p><strong>Telefoni:</strong> {telefoni}</p>
-            <p><strong>Paketa e zgjedhur:</strong> {paketa}</p>
-            <hr>
-            <p style="font-size: 12px; color: #777;">Ky është një njoftim automatik nga sistemi juaj.</p>
+            <p><strong>Paketa:</strong> {paketa}</p>
         </body>
     </html>
     """
-    msg.set_content(f"Regjistrim i ri: {emri}, Tel: {telefoni}, Paketa: {paketa}")
+    msg.set_content(f"Emri: {emri}, Tel: {telefoni}, Paketa: {paketa}")
     msg.add_alternative(html_content, subtype='html')
     
     msg['Subject'] = f'🔔 Klient i ri: {emri}'
@@ -37,16 +33,15 @@ def dergo_email_njoftimi(emri, telefoni, paketa):
     msg['To'] = 'rumejsaduka0@gmail.com'
 
     try:
-        # Ndryshimi kryesor: Përdorim portën 587 dhe timeout
+        # Përdorim SMTP me starttls në vend të SMTP_SSL
         with smtplib.SMTP('smtp.gmail.com', 587, timeout=15) as smtp:
-            smtp.starttls()  # Siguron lidhjen
+            smtp.starttls()  # Ky rresht është kritik për portën 587
             smtp.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
             smtp.send_message(msg)
         print("✅ Email-i u dërgua me sukses!")
     except Exception as e:
-        # Kjo parandalon që gabimi i email-it të bllokojë regjistrimin në website
         print(f"❌ Gabim teknik me email-in: {e}")
-
+        
 # --- DATABASE ---
 def init_db():
     conn = sqlite3.connect('gym.db')
