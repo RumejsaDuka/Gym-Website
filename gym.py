@@ -91,16 +91,14 @@ def regjistro():
 @app.route('/admin')
 def admin():
     try:
-        conn = sqlite3.connect('gym.db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM anetaret ORDER BY id DESC')
-        te_dhenat = cursor.fetchall()
-        conn.close()
-        # Sigurohu që ke një skedar admin.html në folderin templates
-        return render_template('admin.html', anetaret=te_dhenat)
+# Përdorim SMTP (porta 587) në vend të SMTP_SSL (porta 465)
+        with smtplib.SMTP('smtp.gmail.com', 587, timeout=15) as smtp:
+            smtp.starttls()  # Ky rresht është i detyrueshëm për portën 587
+            smtp.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
+            smtp.send_message(msg)
+        print("✅ Email-i u dërgua me sukses!")
     except Exception as e:
-        return f"Gabim në leximin e të dhënave: {str(e)}"
-
+        print(f"❌ Gabim teknik me email-in: {e}")
 # porti
 if __name__ == '__main__':
     # Shënim: Në Render, kjo pjesë mund të injorohet sepse përdoret gunicorn
