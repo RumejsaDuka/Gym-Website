@@ -10,33 +10,18 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// 2. Dërgimi i Formës me AJAX (I bashkuar)
+// 2. Dërgimi i Formës (Versioni për Netlify)
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registrationForm');
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+            // Ne nuk përdorim e.preventDefault() këtu që Netlify ta kapë dërgimin
             const submitBtn = this.querySelector('button[type="submit"]');
             submitBtn.disabled = true; 
-
-            let formData = new FormData(this);
-
-            fetch('/regjistro', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                submitBtn.disabled = false;
-                this.reset();
-            })
-            .catch(error => {
-                submitBtn.disabled = false;
-                console.error('Gabim:', error);
-            });
+            submitBtn.innerText = "Duke u dërguar...";
+            
+            // Forma do të dërgohet automatikisht te Netlify
         });
     }
 });
