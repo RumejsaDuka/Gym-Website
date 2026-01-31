@@ -1,9 +1,50 @@
 import sqlite3
 from flask import Flask, render_template, request, jsonify
+import smtplib
+import os
+from email.message import EmailMessage
+from dotenv import load_dotenv
+
+# Ngarkon variablat nga skedari .env
+load_dotenv()
 
 app = Flask(__name__)
 
-# Funksioni për të krijuar databazën (E ndryshova në gym.db)
+# --- FUNKSIONI PËR DËRGIMIN E EMAIL-IT ---
+def dergo_email_njoftimi(emri, telefoni, paketa):
+    msg = EmailMessage()
+    
+    # Versioni HTML për një pamje më profesionale
+    html_content = f"""
+    <html>
+        <body style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
+            <h2 style="color: #d32f2f;">Fusion Gym - Regjistrim i Ri!</h2>
+            <p>Ju keni një aplikim të ri nga faqja juaj e internetit:</p>
+            <hr>
+            <p><strong>Emri:</strong> {emri}</p>
+            <p><strong>Telefoni:</strong> {telefoni}</p>
+            <p><strong>Paketa e zgjedhur:</strong> {paketa}</p>
+            <hr>
+            <p style="font-size: 12px; color: #777;">Ky është një njoftim automatik nga sistemi juaj.</p>
+        </body>
+    </html>
+    """
+    msg.set_content(f"Regjistrim i ri: {emri}, Tel: {telefoni}, Paketa: {paketa}") # Fallback tekst
+    msg.add_alternative(html_content, subtype='html')
+    
+    msg['Subject'] = f'🔔 Klient i ri: {emri}'
+    msg['From'] = os.getenv('EMAIL_USER')
+    msg['To'] = 'rumejsaduka0@gmail.com' # Email-i ku do vijnë njoftimet
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
+            smtp.send_message(msg)
+        print("✅ Email-i u dërgua me sukses!")
+    except Exception as e:
+        print(f"❌ Gabim gjatë dërgimit të email-it: {e}")
+
+# --- DATABASE ---
 def init_db():
     conn = sqlite3.connect('gym.db')
     cursor = conn.cursor()
@@ -38,6 +79,10 @@ def regjistro():
         cursor.execute('INSERT INTO anetaret (emri, telefoni, paketa) VALUES (?, ?, ?)', 
                        (emri, telefoni, paketa))
         conn.commit()
+        
+        # Thirrja e funksionit të email-it pasi ruhet në DB
+        dergo_email_njoftimi(emri, telefoni, paketa)
+
         return jsonify({"status": "success", "message": f"Faleminderit {emri}! Regjistrimi u krye."})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
@@ -58,6 +103,7 @@ def admin():
     except Exception as e:
         return f"Gabim në leximin e të dhënave: {str(e)}"
 
-# KJO DUHET TË JETË GJITHMONË NË FUND TË SKEDARIT
+# porti
 if __name__ == '__main__':
+    # Shënim: Në Render, kjo pjesë mund të injorohet sepse përdoret gunicorn
     app.run(debug=True, port=5001)
