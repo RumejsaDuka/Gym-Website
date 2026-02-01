@@ -1110,3 +1110,88 @@ html {
   }
 }
 
+/* Container-i kryesor me hije kreative */
+.contact-box-wrapper {
+    box-shadow: 0 20px 80px rgba(255, 0, 0, 0.15); /* Hije e lehtë e kuqe neon */
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Stilimi i Input-eve */
+.creative-input {
+    border: none !important;
+    border-bottom: 2px solid #eee !important;
+    border-radius: 0 !important;
+    padding: 12px 5px !important;
+    font-size: 0.9rem !important;
+    transition: 0.3s ease !important;
+}
+
+.creative-input:focus {
+    border-bottom-color: #000 !important;
+    background-color: transparent !important;
+}
+
+/* Butoni */
+.creative-btn {
+    letter-spacing: 3px;
+    transition: 0.4s !important;
+    border-radius: 0;
+}
+
+.creative-btn:hover {
+    background-color: #d60000 !important; /* Ngjyra neon që ke te root */
+    border-color: #d60000 !important;
+}
+
+/* Mesazhi i Suksesit Modern */
+.contact-success-creative {
+    text-align: center;
+    padding: 40px 0;
+    animation: scaleUp 0.5s ease forwards;
+}
+
+.success-icon-box {
+    width: 70px;
+    height: 70px;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+    box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+}
+
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Rregullimi i Hartës */
+.map-container-creative iframe {
+    filter: grayscale(0.2) contrast(1.1); /* E bën hartën pak më "dark" që të shkojë me gym-in */
+}
+.map-container-creative:hover iframe {
+    filter: grayscale(0) invert(0) contrast(1); /* Kur kalon mausin, kthehet në ngjyra normale */
+    opacity: 1;
+}
+
+.creative-btn:hover {
+    background-color: #ff0000 !important; /* Ngjyrë e kuqe e fortë */
+    letter-spacing: 5px; /* Teksti hapet pak kur kalon mausin */
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+/* per animacionit  */
+#contactConfirmationMessage {
+    transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
