@@ -10,18 +10,48 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// 2. Dërgimi i Formës (Versioni për Netlify)
+// 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registrationForm');
+    const form = document.getElementById('registrationForm') || document.getElementById('gymForm');
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            // Ne nuk përdorim e.preventDefault() këtu që Netlify ta kapë dërgimin
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true; 
-            submitBtn.innerText = "Duke u dërguar...";
+            e.preventDefault(); // Ky rresht ndalon tabelën e bardhë të Netlify
+
+            const myForm = e.target;
+            const formData = new FormData(myForm);
+            const submitBtn = myForm.querySelector('button[type="submit"]');
             
-            // Forma do të dërgohet automatikisht te Netlify
+            // Ndryshojmë butonin gjatë dërgimit
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Duke u dërguar...";
+
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+            })
+            .then(() => {
+                // Shfaqim mesazhin e suksesit
+                alert("Regjistrimi u krye me sukses! Do t'ju kontaktojmë së shpejti.");
+                
+                // Mbyllim modalin e Bootstrap (nëse është hapur)
+                const modalElement = document.getElementById('planModal');
+                if (modalElement) {
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) modal.hide();
+                }
+                
+                myForm.reset(); // Pastron fushat
+            })
+            .catch((error) => {
+                alert("Ndodhi një gabim: " + error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalBtnText;
+            });
         });
     }
 });
@@ -39,18 +69,18 @@ function updatePlanName(planName) {
 const serviceDetails = {
     'body': {
         title: 'Bodybuilding',
-        text: 'Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale, i pajisur me teknologjinë më të fundit për izolimin e muskujve.',
-        points: ['Hapësirë e dedikuar për pesha të lira deri në 150kg', 'Makineri profesionale të markave Panatta dhe Hammer Strength', 'Konsulta falas për suplementet dhe proteinat' , 'Ambient i monitoruar për siguri maksimale gjatë stërvitjes']
+        text: 'Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale.',
+        points: ['Hapësirë e dedikuar për pesha të lira', 'Makineri profesionale Panatta', 'Konsulta falas për suplementet']
     },
     'cross': {
         title: 'Crossfit',
-        text: 'Një Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë. Programet tona të Crossfit janë të dizajnuara për të rritur performancën tuaj atletike në kohë rekord. që kombinon forcën, gjimnastikën dhe qëndrueshmërinë kardiovaskulare.',
-        points: ['Plan ushqimor i personalizuar bazuar në metabolizmin tuaj.', 'Klasa në grup me energji të lartë dhe muzikë motivuese', 'Trajnerë të certifikuar që korrigjojnë teknikën në çdo lëvizje.' ,'Komunitet motivues']
+        text: 'Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë.',
+        points: ['Plan ushqimor i personalizuar', 'Klasa në grup me energji të lartë', 'Trajnerë të certifikuar']
     },
     'personal': {
         title: 'Trajnim Personal',
-        text: 'Nuk ka rrugë të shkurtra, por ka rrugë më të zgjuara. Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet që dëshironi të arrini.',
-        points: ['Plan ushqimor i personalizuar bazuar në metabolizmin tuaj.', 'Program stërvitor unik për qëllimet tuaja (rënie në peshë ose rritje mase).', 'Fleksibilitet me oraret sipas nevojave tuaja ditore.']
+        text: 'Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet.',
+        points: ['Program unik stërvitor', 'Ndjekje rigoroze e progresit', 'Fleksibilitet me oraret']
     }
 };
 
@@ -63,56 +93,20 @@ function openModal(type) {
     
     let listHTML = '';
     data.points.forEach(point => listHTML += `<li>✅ ${point}</li>`);
-// regjistrohu tani te shkoj te kontankti 
     listHTML += `<br><a href="#contact" onclick="closeModal()" class="btn-regjistro-modal">REGJISTROHU TANI</a>`;
     document.getElementById('modalList').innerHTML = listHTML;
     
     modal.style.display = 'flex';
-    
-    // Vonesë 10ms që animacioni të fillojë pasi të shfaqet dritarja
-    setTimeout(() => {
-        modal.classList.add('active');
-    }, 10);
+    setTimeout(() => { modal.classList.add('active'); }, 10);
 }
 
 function closeModal() {
     const modal = document.getElementById('serviceModal');
     modal.classList.remove('active');
-    
-    // Prisni sa të mbarojë animacioni para se ta fshihni plotësisht
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 400);
+    setTimeout(() => { modal.style.display = 'none'; }, 400);
 }
 
 window.onclick = function(event) {
     const modal = document.getElementById('serviceModal');
-    if (event.target == modal) {
-        closeModal();
-    }
+    if (event.target == modal) closeModal();
 }
-
-document.getElementById("gymForm").addEventListener("submit", function(e) {
-  e.preventDefault(); // Ndalon largimin nga faqja
-
-  const myForm = e.target;
-  const formData = new FormData(myForm);
-  
-  fetch("/", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(formData).toString(),
-  })
-    .then(() => {
-      // KËTU NDODH MAGJIA: Çfarë do që të ndodhë pasi dërgohet?
-      alert("Regjistrimi u krye me sukses! Do t'ju kontaktojmë së shpejti.");
-      
-      // Opsionale: Mbyll modalin automatikisht
-      const modalElement = document.getElementById('planModal');
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      modal.hide();
-      
-      myForm.reset(); // Pastron fushat e formës
-    })
-    .catch((error) => alert("Ndodhi një gabim: " + error));
-});
