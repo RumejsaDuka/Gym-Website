@@ -1,27 +1,24 @@
-// 1. Navbar Scroll Effect
+// 1. Efekti i Navbarit gjatë Scroll-it
 window.addEventListener("scroll", () => {
   const nav = document.querySelector(".navbar");
-  if (!nav) return;
-
   if (window.scrollY > 50) {
-    nav.style.padding = "10px 0";
+    nav.classList.add("scrolled", "shadow");
     nav.style.background = "rgba(0, 0, 0, 0.95)";
   } else {
-    nav.style.padding = "20px 0";
-    nav.style.background = "rgba(0, 0, 0, 0.8)";
+    nav.classList.remove("scrolled", "shadow");
+    nav.style.background = "black";
   }
 });
 
-// 2. NETLIFY FORMS – AJAX (Contact + Registration)
+// 2. Trajtimi i Formave (Netlify AJAX)
 document.addEventListener("DOMContentLoaded", () => {
   const forms = document.querySelectorAll('form[data-netlify="true"]');
 
   forms.forEach((form) => {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
-
-      const formData = new FormData(form);
-      const submitBtn = form.querySelector('button[type="submit"]');
+      const formData = new FormData(this);
+      const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerText;
 
       submitBtn.disabled = true;
@@ -32,103 +29,56 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData).toString(),
       })
-        .then(() => {
-          // ==========================
-          // CONTACT FORM CONFIRMATION
-          // ==========================
-          if (form.name === "contact-general") {
-            const msg = document.getElementById("contactConfirmationMessage");
-
-            form.style.display = "none";
-            msg.style.display = "block";
-          }
-
-          // ==========================
-          // REGISTRATION FORM (MODAL)
-          // ==========================
-          if (form.name === "regjistrim-palestra") {
-            const registrationForm =
-              document.getElementById("registrationForm");
-            const confirmationMessage = document.getElementById(
-              "confirmationMessage",
-            );
-
-            if (registrationForm && confirmationMessage) {
-              registrationForm.style.display = "none";
-              confirmationMessage.style.display = "block";
-            }
-
-            form.reset();
-
-            setTimeout(() => {
-              const modalElement = document.getElementById("planModal");
-              if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if (modal) modal.hide();
-              }
-
-              if (registrationForm && confirmationMessage) {
-                registrationForm.style.display = "block";
-                confirmationMessage.style.display = "none";
-              }
-            }, 3500);
-          }
-        })
-        .catch(() => alert("Ndodhi një gabim. Ju lutem provoni përsëri."))
-        .finally(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerText = originalText;
-        });
+      .then(() => {
+        if (this.name === "contact-general") {
+          this.style.display = "none";
+          document.getElementById("contactConfirmationMessage").style.display = "block";
+        }
+        
+        if (this.name === "regjistrim-palestra") {
+          document.getElementById("registrationForm").style.display = "none";
+          document.getElementById("confirmationMessage").style.display = "block";
+          this.reset();
+        }
+      })
+      .catch(() => alert("Ndodhi një gabim. Provoni përsëri."))
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = originalText;
+      });
     });
   });
 });
 
-// 3. Paketat
-function updatePlanName(planName) {
-  const planText = document.getElementById("selectedPlanText");
-  const planInput = document.getElementById("hiddenPlanInput");
-
-  if (planText) planText.innerText = "Ju po zgjidhni paketën: " + planName;
-  if (planInput) planInput.value = planName;
-}
-
-// 4. Service Modal
+// 3. Funksioni për Modal-in e Shërbimeve
 const serviceDetails = {
   body: {
     title: "Bodybuilding",
-    text: "Arritni fizikun që keni ëndërruar gjithmonë.",
-    points: [
-      "Hapësirë e dedikuar për pesha",
-      "Makineri profesionale",
-      "Konsulta falas",
-    ],
+    text: "Transformo fizikun tënd me pajisjet më moderne në treg.",
+    points: ["Pajisje Hammer Strength", "Zonë e madhe Free Weights", "Asistencë teknike"]
   },
   cross: {
     title: "Crossfit",
-    text: "Sfidoni veten çdo ditë.",
-    points: [
-      "Klasa intensive",
-      "Trajnerë të certifikuar",
-      "Program i personalizuar",
-    ],
+    text: "Sfidoni limitet e forcës dhe kondicionit.",
+    points: ["WOD të ndryshme çdo ditë", "Trajnerë të certifikuar", "Komunitet motivues"]
   },
   personal: {
     title: "Trajnim Personal",
-    text: "Fokus total tek rezultatet.",
-    points: ["Program unik", "Ndjekje progresi", "Orar fleksibël"],
-  },
+    text: "Arritni qëllimet tuaja 3x më shpejt.",
+    points: ["Plan ushqimor", "Monitorim 1-më-1", "Analizë e përbërjes trupore"]
+  }
 };
 
 function openModal(type) {
   const modal = document.getElementById("serviceModal");
   const data = serviceDetails[type];
+  if(!data) return;
 
   document.getElementById("modalTitle").innerText = data.title;
   document.getElementById("modalText").innerText = data.text;
-
+  
   let listHTML = "";
-  data.points.forEach((p) => (listHTML += `<li>✅ ${p}</li>`));
-  listHTML += `<br><a href="#contact" onclick="closeModal()" class="btn-regjistro-modal">REGJISTROHU TANI</a>`;
+  data.points.forEach(p => listHTML += `<li><i class="bi bi-check2-circle text-danger me-2"></i>${p}</li>`);
   document.getElementById("modalList").innerHTML = listHTML;
 
   modal.style.display = "flex";
@@ -138,10 +88,21 @@ function openModal(type) {
 function closeModal() {
   const modal = document.getElementById("serviceModal");
   modal.classList.remove("active");
-  setTimeout(() => (modal.style.display = "none"), 300);
+  setTimeout(() => modal.style.display = "none", 300);
 }
 
-window.addEventListener("click", (e) => {
-  const modal = document.getElementById("serviceModal");
-  if (e.target === modal) closeModal();
-});
+// 4. Përditësimi i Paketës në Modal-in e Regjistrimit
+function updatePlanName(plan) {
+    const text = document.getElementById('selectedPlanText');
+    const input = document.getElementById('hiddenPlanInput');
+    if(text) text.innerText = "Paketa e zgjedhur: " + plan;
+    if(input) input.value = plan;
+}
+// Shto këtë pjesë brenda fetch().then() te gym.js
+if (this.name === "contact-general") {
+    this.style.display = "none";
+    const successDiv = document.getElementById("contactConfirmationMessage");
+    successDiv.style.display = "block";
+    // Kjo ndez animacionin e checkmark-ut
+    successDiv.classList.add("active-animation"); 
+}
