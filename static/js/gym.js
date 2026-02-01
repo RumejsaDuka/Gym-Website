@@ -91,3 +91,28 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+document.getElementById("gymForm").addEventListener("submit", function(e) {
+  e.preventDefault(); // Ndalon largimin nga faqja
+
+  const myForm = e.target;
+  const formData = new FormData(myForm);
+  
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(formData).toString(),
+  })
+    .then(() => {
+      // KËTU NDODH MAGJIA: Çfarë do që të ndodhë pasi dërgohet?
+      alert("Regjistrimi u krye me sukses! Do t'ju kontaktojmë së shpejti.");
+      
+      // Opsionale: Mbyll modalin automatikisht
+      const modalElement = document.getElementById('planModal');
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal.hide();
+      
+      myForm.reset(); // Pastron fushat e formës
+    })
+    .catch((error) => alert("Ndodhi një gabim: " + error));
+});
