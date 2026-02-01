@@ -180,7 +180,7 @@
             <div class="row g-0">
                 <div class="col-lg-6 p-5 bg-white text-black">
                     <h2 class="text-uppercase fw-bold mb-4">Na Kontaktoni</h2>
-                    <form name="contact-general" method="POST" data-netlify="true">
+                    <form name="contact-general" data-netlify="true">
                         <input type="hidden" name="form-name" value="contact-general">
                         <div class="mb-3"><input type="text" name="name" class="form-control rounded-0 border-dark"
                                 placeholder="Emri i Plotë" required></div>
@@ -228,10 +228,18 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Forma e Regjistrimit -->
+                    <!-- Hidden form për Netlify (ky detektohet nga Netlify por nuk përdoret nga users) -->
+                    <form name="regjistrim-palestra" netlify netlify-honeypot="bot-field" hidden>
+                        <input name="bot-field">
+                        <input name="emri">
+                        <input name="telefoni">
+                        <input name="paketa">
+                    </form>
+
+                    <!-- Forma e Regjistrimit (e dukshme - pa data-netlify) -->
                     <div id="registrationForm">
                         <p id="selectedPlanText" class="text-danger fw-bold text-uppercase"></p>
-                        <form id="gymForm" name="regjistrim-palestra" method="POST" data-netlify="true">
+                        <form id="gymForm" name="regjistrim-palestra-visible">
                             <input type="hidden" name="form-name" value="regjistrim-palestra">
                             <input type="hidden" id="hiddenPlanInput" name="paketa">
 

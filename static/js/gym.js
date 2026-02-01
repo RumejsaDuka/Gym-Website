@@ -12,16 +12,72 @@ window.addEventListener('scroll', () => {
 
 // 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
 document.addEventListener('DOMContentLoaded', function() {
-    // Kapim të gjitha format që kanë Netlify-true
-    const forms = document.querySelectorAll('form[data-netlify="true"]');
+    // Kapim formën e regjistrimit (pa data-netlify që të mos redirect-ojë)
+    const gymForm = document.getElementById('gymForm');
     
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+    // Handle gym registration form
+    if (gymForm) {
+        gymForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
 
-            const myForm = e.target;
-            const formData = new FormData(myForm);
-            const submitBtn = myForm.querySelector('button[type="submit"]');
+            const formData = new FormData(gymForm);
+            const submitBtn = gymForm.querySelector('button[type="submit"]');
+            
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Duke u dërguar...";
+
+            // Dërgo formën në Netlify
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+            })
+            .then(response => {
+                console.log('Form submitted successfully');
+                // Fsheh formën
+                document.getElementById('registrationForm').style.display = 'none';
+                // Shfaq mesazhin e konfirmimit
+                document.getElementById('confirmationMessage').style.display = 'block';
+                
+                // Mbyll modalin automatikisht pas 5 sekondash
+                setTimeout(() => {
+                    const modalElement = document.getElementById('planModal');
+                    if (modalElement) {
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        if (modal) modal.hide();
+                        
+                        // Reset modal pas mbylljes
+                        setTimeout(() => {
+                            document.getElementById('registrationForm').style.display = 'block';
+                            document.getElementById('confirmationMessage').style.display = 'none';
+                            gymForm.reset();
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = originalText;
+                        }, 500);
+                    }
+                }, 5000);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Gabim gjatë dërgimit. Ju lutem provoni përsëri.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            });
+            
+            return false;
+        });
+    }
+    
+    // Handle contact form (nëse ka)
+    const contactForm = document.querySelector('form[name="contact-general"]');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(contactForm);
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
             
             submitBtn.disabled = true;
             const originalText = submitBtn.innerText;
@@ -33,41 +89,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(formData).toString(),
             })
             .then(() => {
-                // Kontrollo nëse është forma e regjistrimit në modal
-                if (myForm.id === 'gymForm') {
-                    // Fsheh formën
-                    document.getElementById('registrationForm').style.display = 'none';
-                    // Shfaq mesazhin e konfirmimit
-                    document.getElementById('confirmationMessage').style.display = 'block';
-                    
-                    // Mbyll modalin automatikisht pas 5 sekondash
-                    setTimeout(() => {
-                        const modalElement = document.getElementById('planModal');
-                        if (modalElement) {
-                            const modal = bootstrap.Modal.getInstance(modalElement);
-                            if (modal) modal.hide();
-                            
-                            // Reset modal pas mbylljes
-                            setTimeout(() => {
-                                document.getElementById('registrationForm').style.display = 'block';
-                                document.getElementById('confirmationMessage').style.display = 'none';
-                                myForm.reset();
-                            }, 500);
-                        }
-                    }, 5000);
-                } else {
-                    // Për format e tjera (si forma e kontaktit)
-                    alert("Mesazhi u dërgua me sukses! Do të kontaktohemi me ju së shpejti.");
-                    myForm.reset();
-                }
+                alert("Mesazhi u dërgua me sukses! Do të kontaktohemi me ju së shpejti.");
+                contactForm.reset();
             })
-            .catch((error) => alert("Gabim: " + error))
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Gabim gjatë dërgimit.");
+            })
             .finally(() => {
                 submitBtn.disabled = false;
                 submitBtn.innerText = originalText;
             });
+            
+            return false;
         });
-    });
+    }
     
     // Reset modal kur mbyllet
     const planModal = document.getElementById('planModal');
@@ -75,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         planModal.addEventListener('hidden.bs.modal', function () {
             document.getElementById('registrationForm').style.display = 'block';
             document.getElementById('confirmationMessage').style.display = 'none';
-            document.getElementById('gymForm').reset();
+            if (gymForm) gymForm.reset();
         });
     }
 });
