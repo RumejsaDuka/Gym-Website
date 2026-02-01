@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const myForm = e.target;
             const formData = new FormData(myForm);
             const submitBtn = myForm.querySelector('button[type="submit"]');
-            const successDiv = myForm.querySelector('#successMessage'); // Kërkon div-in brenda kësaj forme
             
             submitBtn.disabled = true;
             const originalText = submitBtn.innerText;
@@ -34,25 +33,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(formData).toString(),
             })
             .then(() => {
-                // Shfaq mesazhin nëse ekziston
-                if (successDiv) {
-                    successDiv.style.display = 'block';
-                } else {
-                    alert("Regjistrimi u krye me sukses!");
-                }
-
-                myForm.reset();
-
-                setTimeout(() => {
-                    if (successDiv) successDiv.style.display = 'none';
+                // Kontrollo nëse është forma e regjistrimit në modal
+                if (myForm.id === 'gymForm') {
+                    // Fsheh formën
+                    document.getElementById('registrationForm').style.display = 'none';
+                    // Shfaq mesazhin e konfirmimit
+                    document.getElementById('confirmationMessage').style.display = 'block';
                     
-                    // Mbyll modalin nëse forma ishte brenda një materiali modal
-                    const modalElement = document.getElementById('planModal');
-                    if (modalElement) {
-                        const modal = bootstrap.Modal.getInstance(modalElement);
-                        if (modal) modal.hide();
-                    }
-                }, 3000);
+                    // Mbyll modalin automatikisht pas 5 sekondash
+                    setTimeout(() => {
+                        const modalElement = document.getElementById('planModal');
+                        if (modalElement) {
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            if (modal) modal.hide();
+                            
+                            // Reset modal pas mbylljes
+                            setTimeout(() => {
+                                document.getElementById('registrationForm').style.display = 'block';
+                                document.getElementById('confirmationMessage').style.display = 'none';
+                                myForm.reset();
+                            }, 500);
+                        }
+                    }, 5000);
+                } else {
+                    // Për format e tjera (si forma e kontaktit)
+                    alert("Mesazhi u dërgua me sukses! Do të kontaktohemi me ju së shpejti.");
+                    myForm.reset();
+                }
             })
             .catch((error) => alert("Gabim: " + error))
             .finally(() => {
@@ -61,6 +68,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+    
+    // Reset modal kur mbyllet
+    const planModal = document.getElementById('planModal');
+    if (planModal) {
+        planModal.addEventListener('hidden.bs.modal', function () {
+            document.getElementById('registrationForm').style.display = 'block';
+            document.getElementById('confirmationMessage').style.display = 'none';
+            document.getElementById('gymForm').reset();
+        });
+    }
 });
 
 // 3. Përditësimi i Paketës së zgjedhur
@@ -95,6 +112,8 @@ function openModal(type) {
     const data = serviceDetails[type];
     const modal = document.getElementById('serviceModal');
     
+    if (!modal) return; // Nëse nuk ekziston modali, mos vazhdo
+    
     document.getElementById('modalTitle').innerText = data.title;
     document.getElementById('modalText').innerText = data.text;
     
@@ -109,11 +128,13 @@ function openModal(type) {
 
 function closeModal() {
     const modal = document.getElementById('serviceModal');
+    if (!modal) return;
+    
     modal.classList.remove('active');
     setTimeout(() => { modal.style.display = 'none'; }, 400);
 }
 
 window.onclick = function(event) {
     const modal = document.getElementById('serviceModal');
-    if (event.target == modal) closeModal();
+    if (modal && event.target == modal) closeModal();
 }

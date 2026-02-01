@@ -219,6 +219,7 @@
         </div>
     </footer>
 
+    <!-- Modal për Regjistrimin -->
     <div class="modal fade" id="planModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-white border-secondary">
@@ -227,27 +228,53 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="selectedPlanText" class="text-danger fw-bold text-uppercase"></p>
-                    <form id="gymForm" name="regjistrim-palestra" method="POST" data-netlify="true">
-                        <input type="hidden" name="form-name" value="regjistrim-palestra">
-                        <input type="hidden" id="hiddenPlanInput" name="paketa">
+                    <!-- Forma e Regjistrimit -->
+                    <div id="registrationForm">
+                        <p id="selectedPlanText" class="text-danger fw-bold text-uppercase"></p>
+                        <form id="gymForm" name="regjistrim-palestra" method="POST" data-netlify="true">
+                            <input type="hidden" name="form-name" value="regjistrim-palestra">
+                            <input type="hidden" id="hiddenPlanInput" name="paketa">
 
-                        <div class="mb-3">
-                            <label class="form-label">Emri i Plotë</label>
-                            <input type="text" name="emri"
-                                class="form-control bg-transparent text-white border-secondary" required>
+                            <div class="mb-3">
+                                <label class="form-label">Emri i Plotë</label>
+                                <input type="text" name="emri"
+                                    class="form-control bg-transparent text-white border-secondary" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Numri i Telefonit</label>
+                                <input type="tel" name="telefoni"
+                                    class="form-control bg-transparent text-white border-secondary" required>
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100 fw-bold py-2">DËRGO KËRKESËN</button>
+                        </form>
+                    </div>
+
+                    <!-- Mesazhi i Konfirmimit (fshehur në fillim) -->
+                    <div id="confirmationMessage" style="display: none;" class="text-center py-4">
+                        <div class="mb-4">
+                            <div class="success-checkmark mx-auto mb-4">
+                                <div class="check-icon">
+                                    <span class="icon-line line-tip"></span>
+                                    <span class="icon-line line-long"></span>
+                                    <div class="icon-circle"></div>
+                                    <div class="icon-fix"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Numri i Telefonit</label>
-                            <input type="tel" name="telefoni"
-                                class="form-control bg-transparent text-white border-secondary" required>
+                        
+                        <h3 class="text-white fw-bold mb-3">Faleminderit për Regjistrimin!</h3>
+                        <p class="text-secondary mb-4">Regjistrimi juaj është pranuar me sukses.</p>
+                        
+                        <div class="alert alert-info bg-transparent border border-info text-white mb-4">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <strong>Do të telefonohemi nga ne sa më shpejti!</strong>
+                            <p class="mb-0 mt-2 small">Ekipi ynë do t'ju kontaktojë së shpejti për të vazhduar procesin.</p>
                         </div>
-                        <div id="successMessage" style="display: none;"
-                            class="alert alert-success bg-success text-white border-0 mb-3 text-center">
-                            ✅ Regjistrimi u krye me sukses!
-                        </div>
-                        <button type="submit" class="btn btn-danger w-100 fw-bold py-2">DËRGO KËRKESËN</button>
-                    </form>
+                        
+                        <button type="button" class="btn btn-outline-light rounded-0 px-4" data-bs-dismiss="modal">
+                            <i class="bi bi-check-circle me-2"></i>MBYLL
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
