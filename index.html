@@ -166,43 +166,41 @@
         </div>
     </section>
 
-
     <section id="contact" class="contact-section py-5 bg-black">
-    <div class="container">
-        <div class="row g-0 contact-box-wrapper">
-            <div class="col-lg-6 p-5 bg-white text-black d-flex flex-column justify-content-center">
-                <div id="form-container">
-                    <h2 class="text-uppercase fw-bold mb-4" style="letter-spacing: 2px;">Na Kontaktoni</h2>
+        <div class="container-fluid">
+            <div class="row g-0">
+                <div class="col-lg-6 p-5 bg-white text-black">
+                    <h2 class="text-uppercase fw-bold mb-4">Na Kontaktoni</h2>
+
                     <form id="contactForm" name="contact-general" method="POST" data-netlify="true">
                         <input type="hidden" name="form-name" value="contact-general">
-                        <div class="mb-4">
-                            <input type="text" name="name" class="form-control creative-input" placeholder="Emri i Plotë" required>
-                        </div>
-                        <div class="mb-4">
-                            <input type="email" name="email" class="form-control creative-input" placeholder="Email" required>
-                        </div>
-                        <div class="mb-4">
-                            <textarea name="message" class="form-control creative-input" rows="3" placeholder="Mesazhi Juaj"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-dark w-100 fw-bold py-3 creative-btn">DËRGO MESAZHIN</button>
+                        <div class="mb-3"><input type="text" name="name" class="form-control rounded-0 border-dark"
+                                placeholder="Emri i Plotë" required></div>
+                        <div class="mb-3"><input type="email" name="email" class="form-control rounded-0 border-dark"
+                                placeholder="Email" required></div>
+                        <div class="mb-3"><textarea name="message" class="form-control rounded-0 border-dark" rows="4"
+                                placeholder="Mesazhi Juaj"></textarea></div>
+                        <button type="submit" class="btn btn-dark w-100 fw-bold py-2 mb-3">DËRGO MESAZHIN</button>
                     </form>
-                </div>
 
-                <div id="contactConfirmationMessage" class="contact-success-creative" style="display: none;">
-                    <div class="success-icon-box">
-                        <i class="fas fa-check"></i>
+                    <div id="contactConfirmationMessage" class="contact-success" style="display: none;">
+                        <div class="checkmark-wrapper">
+                            <div class="checkmark"></div>
+                        </div>
+                        <h5>Mesazhi u dërgua me sukses!</h5>
+                        <p>Do t'ju kontaktojmë sa më shpejt.</p>
                     </div>
-                    <h3 class="fw-bold text-uppercase">U dërgua!</h3>
-                    <p>Faleminderit që na kontaktuat. Do t'ju përgjigjemi së shpejti.</p>
-                </div>
-            </div>
 
-            <div class="col-lg-6 p-0 map-container-creative">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.9927597795536!2d19.83187347535554!3d41.33077079950625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135031367e1f74e5%3A0x14d38f9c91cadf88!2sBRRYLI!5e0!3m2!1ssq!2s!4v1769978911476!5m2!1ssq!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="col-lg-6 p-0">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.9927597795536!2d19.83187347535554!3d41.33077079950625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135031367e1f74e5%3A0x14d38f9c91cadf88!2sBRRYLI!5e0!3m2!1ssq!2s!4v1769978911476!5m2!1ssq!2s"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <footer class="py-5 bg-black border-top border-secondary text-white">
         <div class="container">

@@ -1171,27 +1171,3 @@ html {
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Rregullimi i Hartës */
-.map-container-creative iframe {
-    filter: grayscale(0.2) contrast(1.1); /* E bën hartën pak më "dark" që të shkojë me gym-in */
-}
-.map-container-creative:hover iframe {
-    filter: grayscale(0) invert(0) contrast(1); /* Kur kalon mausin, kthehet në ngjyra normale */
-    opacity: 1;
-}
-
-.creative-btn:hover {
-    background-color: #ff0000 !important; /* Ngjyrë e kuqe e fortë */
-    letter-spacing: 5px; /* Teksti hapet pak kur kalon mausin */
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-}
-
-/* per animacionit  */
-#contactConfirmationMessage {
-    transition: opacity 0.5s ease-in-out;
-}
-
-@keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
