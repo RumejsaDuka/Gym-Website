@@ -9,7 +9,7 @@ body {
 
 /* Navbar më i hollë */
 .navbar {
-    padding: 10px 0 !important; /* Ishte 20px */
+    padding: 8px 0 !important; /* Ishte 20px */
     transition: 0.4s;
     text-transform: uppercase; /* Shkronja të mëdha si Magnet Gym */
     letter-spacing: 2px;
@@ -39,6 +39,11 @@ body {
     position: relative;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
+}
+
+.navbar-brand img {
+    height: 35px; 
+    transition: 0.3s;
 }
 
 /* Vija poshtë menuve kur kalon mausin */

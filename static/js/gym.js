@@ -113,3 +113,40 @@ function updatePlanName(plan) {
     if (input) input.value = plan;
 }
 
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const formContainer = document.getElementById("contactFormContainer");
+    const successMessage = document.getElementById("contactConfirmationMessage");
+    const formData = new FormData(form);
+
+    // Dërgimi me AJAX te Netlify
+    fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+    })
+    .then(() => {
+        // 1. Shfaq mesazhin e suksesit
+        formContainer.style.display = "none";
+        successMessage.style.display = "block";
+        successMessage.classList.add("fade-in");
+
+        // 2. Timer-i 5 sekonda për mbylljen
+        setTimeout(() => {
+            successMessage.classList.add("fade-out"); // Fillon zbehja
+            
+            setTimeout(() => {
+                // Rikthehet forma mbrapsht
+                successMessage.style.display = "none";
+                successMessage.classList.remove("fade-out", "fade-in");
+                
+                form.reset(); // Pastron fushat
+                formContainer.style.display = "block";
+                formContainer.classList.add("fade-in");
+            }, 800); // Kohëzgjatja e zbehjes (fade-out)
+        }, 5000); 
+    })
+    .catch((error) => console.error("Gabim gjatë dërgimit:", error));
+});
