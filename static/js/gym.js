@@ -112,3 +112,4 @@ function updatePlanName(plan) {
     if (text) text.innerText = "Paketa e zgjedhur: " + plan;
     if (input) input.value = plan;
 }
+
