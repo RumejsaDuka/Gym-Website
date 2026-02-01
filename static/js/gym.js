@@ -13,17 +13,16 @@ window.addEventListener('scroll', () => {
 // 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registrationForm') || document.getElementById('gymForm');
+    const successDiv = document.getElementById('successMessage');
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Ky rresht ndalon tabelën e bardhë të Netlify
+            e.preventDefault(); 
 
             const myForm = e.target;
             const formData = new FormData(myForm);
             const submitBtn = myForm.querySelector('button[type="submit"]');
             
-            // Ndryshojmë butonin gjatë dërgimit
-            const originalBtnText = submitBtn.innerText;
             submitBtn.disabled = true;
             submitBtn.innerText = "Duke u dërguar...";
 
@@ -33,24 +32,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(formData).toString(),
             })
             .then(() => {
-                // Shfaqim mesazhin e suksesit
-                alert("Regjistrimi u krye me sukses! Do t'ju kontaktojmë së shpejti.");
-                
-                // Mbyllim modalin e Bootstrap (nëse është hapur)
-                const modalElement = document.getElementById('planModal');
-                if (modalElement) {
-                    const modal = bootstrap.Modal.getInstance(modalElement);
-                    if (modal) modal.hide();
+                // 1. Shfaq mesazhin e bukur jeshil
+                if (successDiv) {
+                    successDiv.style.display = 'block';
                 }
-                
-                myForm.reset(); // Pastron fushat
+
+                // 2. Pastro formën
+                myForm.reset();
+
+                // 3. Pas 4 sekondash, fshih mesazhin dhe mbyll dritaren
+                setTimeout(() => {
+                    if (successDiv) successDiv.style.display = 'none';
+                    
+                    const modalElement = document.getElementById('planModal');
+                    if (modalElement) {
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        if (modal) modal.hide();
+                    }
+                }, 4000);
             })
             .catch((error) => {
-                alert("Ndodhi një gabim: " + error);
+                alert("Gabim: " + error);
             })
             .finally(() => {
                 submitBtn.disabled = false;
-                submitBtn.innerText = originalBtnText;
+                submitBtn.innerText = "DËRGO KËRKESËN";
             });
         });
     }
