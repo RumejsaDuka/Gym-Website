@@ -7,16 +7,29 @@ body {
     color: #fff;
 }
 
+/* Navbar më i hollë */
 .navbar {
-    padding: 10px 0;
+    padding: 10px 0 !important; /* Ishte 20px */
     transition: 0.4s;
     text-transform: uppercase; /* Shkronja të mëdha si Magnet Gym */
     letter-spacing: 2px;
 }
 
+/* Animacioni i fshehjes */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    animation: fadeSlideUp 0.5s ease forwards;
+}
+
+
 /* Kur bën scroll, navbari bëhet i zi fiks si tek Magnet */
 .navbar.scrolled {
-    padding: 4px 0 !important; /* Akoma më i hollë kur lëviz faqja */
+    padding: 5px 0 !important; /* Akoma më i hollë kur lëviz faqja */
     background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
@@ -24,6 +37,8 @@ body {
     font-weight: 700;
     font-size: 14px;
     position: relative;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
 }
 
 /* Vija poshtë menuve kur kalon mausin */
