@@ -180,47 +180,16 @@
             <div class="row g-0">
                 <div class="col-lg-6 p-5 bg-white text-black">
                     <h2 class="text-uppercase fw-bold mb-4">Na Kontaktoni</h2>
-                    
-                    <!-- Forma e Kontaktit -->
-                    <div id="contactForm">
-                        <form name="contact-general" data-netlify="true">
-                            <input type="hidden" name="form-name" value="contact-general">
-                            <div class="mb-3"><input type="text" name="name" class="form-control rounded-0 border-dark"
-                                    placeholder="Emri i Plotë" required></div>
-                            <div class="mb-3"><input type="email" name="email" class="form-control rounded-0 border-dark"
-                                    placeholder="Email" required></div>
-                            <div class="mb-3"><textarea name="message" class="form-control rounded-0 border-dark" rows="4"
-                                    placeholder="Mesazhi Juaj"></textarea></div>
-                            <button type="submit" class="btn btn-dark rounded-0 w-100 py-3 fw-bold">DËRGO MESAZHIN</button>
-                        </form>
-                    </div>
-                    
-                    <!-- Mesazhi i Konfirmimit për Kontakt (fshehur në fillim) -->
-                    <div id="contactConfirmation" style="display: none;" class="text-center py-5">
-                        <div class="mb-4">
-                            <div class="success-checkmark-contact mx-auto mb-4">
-                                <div class="check-icon-contact">
-                                    <span class="icon-line-contact line-tip-contact"></span>
-                                    <span class="icon-line-contact line-long-contact"></span>
-                                    <div class="icon-circle-contact"></div>
-                                    <div class="icon-fix-contact"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <h3 class="text-dark fw-bold mb-3">Faleminderit!</h3>
-                        <p class="text-secondary mb-4">Mesazhi juaj u dërgua me sukses.</p>
-                        
-                        <div class="alert alert-success bg-transparent border border-success text-dark mb-4">
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                            <strong>Do të përgjigemi sa më shpejti!</strong>
-                            <p class="mb-0 mt-2 small">Ekipi ynë do t'ju kontaktojë së shpejti.</p>
-                        </div>
-                        
-                        <button type="button" class="btn btn-dark rounded-0 px-4" onclick="resetContactForm()">
-                            <i class="bi bi-arrow-left me-2"></i>KTHEHU
-                        </button>
-                    </div>
+                    <form name="contact-general" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="contact-general">
+                        <div class="mb-3"><input type="text" name="name" class="form-control rounded-0 border-dark"
+                                placeholder="Emri i Plotë" required></div>
+                        <div class="mb-3"><input type="email" name="email" class="form-control rounded-0 border-dark"
+                                placeholder="Email" required></div>
+                        <div class="mb-3"><textarea name="message" class="form-control rounded-0 border-dark" rows="4"
+                                placeholder="Mesazhi Juaj"></textarea></div>
+                        <button type="submit" class="btn btn-dark rounded-0 w-100 py-3 fw-bold">DËRGO MESAZHIN</button>
+                    </form>
                 </div>
                 <div class="col-lg-6 p-0">
                     <iframe
@@ -262,7 +231,7 @@
                     <!-- Forma e Regjistrimit -->
                     <div id="registrationForm">
                         <p id="selectedPlanText" class="text-danger fw-bold text-uppercase"></p>
-                        <form id="gymForm" name="regjistrim-palestra" data-netlify="true">
+                        <form id="gymForm" name="regjistrim-palestra" method="POST" data-netlify="true">
                             <input type="hidden" name="form-name" value="regjistrim-palestra">
                             <input type="hidden" id="hiddenPlanInput" name="paketa">
 

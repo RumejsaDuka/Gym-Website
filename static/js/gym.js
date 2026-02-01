@@ -1,3 +1,4 @@
+
 // 1. Menaxhimi i Navbarit (Scroll)
 window.addEventListener('scroll', () => {
     const nav = document.querySelector('.navbar');
@@ -10,33 +11,72 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// 2. Dërgimi i Formës me AJAX (I bashkuar)
+// 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registrationForm');
+    // Kapim të gjitha format që kanë Netlify-true
+    const forms = document.querySelectorAll('form[data-netlify="true"]');
     
-    if (form) {
+    forms.forEach(form => {
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); 
+
+            const myForm = e.target;
+            const formData = new FormData(myForm);
+            const submitBtn = myForm.querySelector('button[type="submit"]');
             
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true; 
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Duke u dërguar...";
 
-            let formData = new FormData(this);
-
-            fetch('/regjistro', {
-                method: 'POST',
-                body: formData
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
             })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                submitBtn.disabled = false;
-                this.reset();
+            .then(() => {
+                // Kontrollo nëse është forma e regjistrimit në modal
+                if (myForm.id === 'gymForm') {
+                    // Fsheh formën
+                    document.getElementById('registrationForm').style.display = 'none';
+                    // Shfaq mesazhin e konfirmimit
+                    document.getElementById('confirmationMessage').style.display = 'block';
+                    
+                    // Mbyll modalin automatikisht pas 5 sekondash
+                    setTimeout(() => {
+                        const modalElement = document.getElementById('planModal');
+                        if (modalElement) {
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            if (modal) modal.hide();
+                            
+                            // Reset modal pas mbylljes
+                            setTimeout(() => {
+                                document.getElementById('registrationForm').style.display = 'block';
+                                document.getElementById('confirmationMessage').style.display = 'none';
+                                myForm.reset();
+                            }, 500);
+                        }
+                    }, 5000);
+                } else {
+                    // Për format e tjera (si forma e kontaktit)
+                    alert("Mesazhi u dërgua me sukses! Do të kontaktohemi me ju së shpejti.");
+                    myForm.reset();
+                }
             })
-            .catch(error => {
+            .catch((error) => alert("Gabim: " + error))
+            .finally(() => {
                 submitBtn.disabled = false;
-                console.error('Gabim:', error);
+                submitBtn.innerText = originalText;
             });
+        });
+    });
+    
+    // Reset modal kur mbyllet
+    const planModal = document.getElementById('planModal');
+    if (planModal) {
+        planModal.addEventListener('hidden.bs.modal', function () {
+            document.getElementById('registrationForm').style.display = 'block';
+            document.getElementById('confirmationMessage').style.display = 'none';
+            document.getElementById('gymForm').reset();
         });
     }
 });
@@ -54,18 +94,18 @@ function updatePlanName(planName) {
 const serviceDetails = {
     'body': {
         title: 'Bodybuilding',
-        text: 'Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale, i pajisur me teknologjinë më të fundit për izolimin e muskujve.',
-        points: ['Hapësirë e dedikuar për pesha të lira deri në 150kg', 'Makineri profesionale të markave Panatta dhe Hammer Strength', 'Konsulta falas për suplementet dhe proteinat' , 'Ambient i monitoruar për siguri maksimale gjatë stërvitjes']
+        text: 'Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale.',
+        points: ['Hapësirë e dedikuar për pesha të lira', 'Makineri profesionale Panatta', 'Konsulta falas për suplementet']
     },
     'cross': {
         title: 'Crossfit',
-        text: 'Një Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë. Programet tona të Crossfit janë të dizajnuara për të rritur performancën tuaj atletike në kohë rekord. që kombinon forcën, gjimnastikën dhe qëndrueshmërinë kardiovaskulare.',
-        points: ['Plan ushqimor i personalizuar bazuar në metabolizmin tuaj.', 'Klasa në grup me energji të lartë dhe muzikë motivuese', 'Trajnerë të certifikuar që korrigjojnë teknikën në çdo lëvizje.' ,'Komunitet motivues']
+        text: 'Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë.',
+        points: ['Plan ushqimor i personalizuar', 'Klasa në grup me energji të lartë', 'Trajnerë të certifikuar']
     },
     'personal': {
         title: 'Trajnim Personal',
-        text: 'Nuk ka rrugë të shkurtra, por ka rrugë më të zgjuara. Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet që dëshironi të arrini.',
-        points: ['Plan ushqimor i personalizuar bazuar në metabolizmin tuaj.', 'Program stërvitor unik për qëllimet tuaja (rënie në peshë ose rritje mase).', 'Fleksibilitet me oraret sipas nevojave tuaja ditore.']
+        text: 'Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet.',
+        points: ['Program unik stërvitor', 'Ndjekje rigoroze e progresit', 'Fleksibilitet me oraret']
     }
 };
 
@@ -73,36 +113,29 @@ function openModal(type) {
     const data = serviceDetails[type];
     const modal = document.getElementById('serviceModal');
     
+    if (!modal) return; // Nëse nuk ekziston modali, mos vazhdo
+    
     document.getElementById('modalTitle').innerText = data.title;
     document.getElementById('modalText').innerText = data.text;
     
     let listHTML = '';
     data.points.forEach(point => listHTML += `<li>✅ ${point}</li>`);
-// regjistrohu tani te shkoj te kontankti 
     listHTML += `<br><a href="#contact" onclick="closeModal()" class="btn-regjistro-modal">REGJISTROHU TANI</a>`;
     document.getElementById('modalList').innerHTML = listHTML;
     
     modal.style.display = 'flex';
-    
-    // Vonesë 10ms që animacioni të fillojë pasi të shfaqet dritarja
-    setTimeout(() => {
-        modal.classList.add('active');
-    }, 10);
+    setTimeout(() => { modal.classList.add('active'); }, 10);
 }
 
 function closeModal() {
     const modal = document.getElementById('serviceModal');
-    modal.classList.remove('active');
+    if (!modal) return;
     
-    // Prisni sa të mbarojë animacioni para se ta fshihni plotësisht
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 400);
+    modal.classList.remove('active');
+    setTimeout(() => { modal.style.display = 'none'; }, 400);
 }
 
 window.onclick = function(event) {
     const modal = document.getElementById('serviceModal');
-    if (event.target == modal) {
-        closeModal();
-    }
+    if (modal && event.target == modal) closeModal();
 }
