@@ -8,7 +8,7 @@ body {
 }
 
 .navbar {
-    padding: 20px 0;
+    padding: 10px 0;
     transition: 0.4s;
     text-transform: uppercase; /* Shkronja të mëdha si Magnet Gym */
     letter-spacing: 2px;
@@ -16,8 +16,8 @@ body {
 
 /* Kur bën scroll, navbari bëhet i zi fiks si tek Magnet */
 .navbar.scrolled {
+    padding: 4px 0 !important; /* Akoma më i hollë kur lëviz faqja */
     background-color: rgba(0, 0, 0, 0.9) !important;
-    padding: 10px 0;
 }
 
 .nav-link {
