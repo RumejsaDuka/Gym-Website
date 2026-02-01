@@ -1,86 +1,27 @@
-// 1. Menaxhimi i Navbarit (Scroll)
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        nav.style.padding = '10px 0';
-        nav.style.background = 'rgba(0, 0, 0, 0.95)';
-    } else {
-        nav.style.padding = '20px 0';
-        nav.style.background = 'rgba(0, 0, 0, 0.8)';
-    }
-});
+function updatePlanName(plan) {
+    document.getElementById('selectedPlanText').innerText = "Paketa: " + plan;
+    document.getElementById('hiddenPlanInput').value = plan;
+}
 
-// 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
+// Funksioni për të kthyer formën e kontaktit në gjendje fillestare
+function resetContactForm() {
+    document.getElementById('contactConfirmation').style.display = 'none';
+    document.getElementById('contactForm').style.display = 'block';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Kapim formën e regjistrimit (pa data-netlify që të mos redirect-ojë)
-    const gymForm = document.getElementById('gymForm');
+    const allForms = document.querySelectorAll('form[data-netlify="true"]');
     
-    // Handle gym registration form
-    if (gymForm) {
-        gymForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+    allForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
 
-            const formData = new FormData(gymForm);
-            const submitBtn = gymForm.querySelector('button[type="submit"]');
+            const myForm = e.target;
+            const formData = new FormData(myForm);
+            const submitBtn = myForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
             
             submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = "Duke u dërguar...";
-
-            // Dërgo formën në Netlify
-            fetch("/", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString(),
-            })
-            .then(response => {
-                console.log('Form submitted successfully');
-                // Fsheh formën
-                document.getElementById('registrationForm').style.display = 'none';
-                // Shfaq mesazhin e konfirmimit
-                document.getElementById('confirmationMessage').style.display = 'block';
-                
-                // Mbyll modalin automatikisht pas 5 sekondash
-                setTimeout(() => {
-                    const modalElement = document.getElementById('planModal');
-                    if (modalElement) {
-                        const modal = bootstrap.Modal.getInstance(modalElement);
-                        if (modal) modal.hide();
-                        
-                        // Reset modal pas mbylljes
-                        setTimeout(() => {
-                            document.getElementById('registrationForm').style.display = 'block';
-                            document.getElementById('confirmationMessage').style.display = 'none';
-                            gymForm.reset();
-                            submitBtn.disabled = false;
-                            submitBtn.innerText = originalText;
-                        }, 500);
-                    }
-                }, 5000);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Gabim gjatë dërgimit. Ju lutem provoni përsëri.");
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            });
-            
-            return false;
-        });
-    }
-    
-    // Handle contact form (nëse ka)
-    const contactForm = document.querySelector('form[name="contact-general"]');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(contactForm);
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            
-            submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
             submitBtn.innerText = "Duke u dërguar...";
 
             fetch("/", {
@@ -89,88 +30,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(formData).toString(),
             })
             .then(() => {
-                alert("Mesazhi u dërgua me sukses! Do të kontaktohemi me ju së shpejti.");
-                contactForm.reset();
+                if (myForm.getAttribute('name') === 'contact-general') {
+                    // Shfaq suksesin te seksioni Contact
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('contactConfirmation').style.display = 'block';
+                } else {
+                    // Shfaq suksesin brenda Modalit të Paketave
+                    document.getElementById('registrationFormContainer').style.display = 'none';
+                    document.getElementById('modalSuccessVisual').style.display = 'block';
+                    
+                    // Mbylle modalin automatikisht pas 5 sekondash
+                    setTimeout(() => {
+                        const modalElement = document.getElementById('planModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        if (modal) modal.hide();
+                        
+                        // Reseto modalin që të jetë gati për herën tjetër
+                        setTimeout(() => {
+                            document.getElementById('registrationFormContainer').style.display = 'block';
+                            document.getElementById('modalSuccessVisual').style.display = 'none';
+                        }, 500);
+                    }, 5000);
+                }
+                myForm.reset();
             })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Gabim gjatë dërgimit.");
-            })
+            .catch((error) => alert("Gabim gjatë dërgimit: " + error))
             .finally(() => {
                 submitBtn.disabled = false;
                 submitBtn.innerText = originalText;
             });
-            
-            return false;
         });
-    }
-    
-    // Reset modal kur mbyllet
-    const planModal = document.getElementById('planModal');
-    if (planModal) {
-        planModal.addEventListener('hidden.bs.modal', function () {
-            document.getElementById('registrationForm').style.display = 'block';
-            document.getElementById('confirmationMessage').style.display = 'none';
-            if (gymForm) gymForm.reset();
-        });
-    }
+    });
 });
-
-// 3. Përditësimi i Paketës së zgjedhur
-function updatePlanName(planName) {
-    const planText = document.getElementById('selectedPlanText');
-    const planInput = document.getElementById('hiddenPlanInput');
-    
-    if (planText) planText.innerText = "Ju po zgjidhni paketën: " + planName;
-    if (planInput) planInput.value = planName; 
-}
-
-// 4. Detajet e Shërbimeve (Modal)
-const serviceDetails = {
-    'body': {
-        title: 'Bodybuilding',
-        text: 'Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale.',
-        points: ['Hapësirë e dedikuar për pesha të lira', 'Makineri profesionale Panatta', 'Konsulta falas për suplementet']
-    },
-    'cross': {
-        title: 'Crossfit',
-        text: 'Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë.',
-        points: ['Plan ushqimor i personalizuar', 'Klasa në grup me energji të lartë', 'Trajnerë të certifikuar']
-    },
-    'personal': {
-        title: 'Trajnim Personal',
-        text: 'Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet.',
-        points: ['Program unik stërvitor', 'Ndjekje rigoroze e progresit', 'Fleksibilitet me oraret']
-    }
-};
-
-function openModal(type) {
-    const data = serviceDetails[type];
-    const modal = document.getElementById('serviceModal');
-    
-    if (!modal) return; // Nëse nuk ekziston modali, mos vazhdo
-    
-    document.getElementById('modalTitle').innerText = data.title;
-    document.getElementById('modalText').innerText = data.text;
-    
-    let listHTML = '';
-    data.points.forEach(point => listHTML += `<li>✅ ${point}</li>`);
-    listHTML += `<br><a href="#contact" onclick="closeModal()" class="btn-regjistro-modal">REGJISTROHU TANI</a>`;
-    document.getElementById('modalList').innerHTML = listHTML;
-    
-    modal.style.display = 'flex';
-    setTimeout(() => { modal.classList.add('active'); }, 10);
-}
-
-function closeModal() {
-    const modal = document.getElementById('serviceModal');
-    if (!modal) return;
-    
-    modal.classList.remove('active');
-    setTimeout(() => { modal.style.display = 'none'; }, 400);
-}
-
-window.onclick = function(event) {
-    const modal = document.getElementById('serviceModal');
-    if (modal && event.target == modal) closeModal();
-}
