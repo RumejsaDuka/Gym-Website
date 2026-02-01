@@ -12,18 +12,20 @@ window.addEventListener('scroll', () => {
 
 // 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registrationForm') || document.getElementById('gymForm');
-    const successDiv = document.getElementById('successMessage');
+    // Kapim të gjitha format që kanë Netlify-true
+    const forms = document.querySelectorAll('form[data-netlify="true"]');
     
-    if (form) {
+    forms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault(); 
 
             const myForm = e.target;
             const formData = new FormData(myForm);
             const submitBtn = myForm.querySelector('button[type="submit"]');
+            const successDiv = myForm.querySelector('#successMessage'); // Kërkon div-in brenda kësaj forme
             
             submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
             submitBtn.innerText = "Duke u dërguar...";
 
             fetch("/", {
@@ -32,34 +34,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(formData).toString(),
             })
             .then(() => {
-                // 1. Shfaq mesazhin e bukur jeshil
+                // Shfaq mesazhin nëse ekziston
                 if (successDiv) {
                     successDiv.style.display = 'block';
+                } else {
+                    alert("Regjistrimi u krye me sukses!");
                 }
 
-                // 2. Pastro formën
                 myForm.reset();
 
-                // 3. Pas 4 sekondash, fshih mesazhin dhe mbyll dritaren
                 setTimeout(() => {
                     if (successDiv) successDiv.style.display = 'none';
                     
+                    // Mbyll modalin nëse forma ishte brenda një materiali modal
                     const modalElement = document.getElementById('planModal');
                     if (modalElement) {
                         const modal = bootstrap.Modal.getInstance(modalElement);
                         if (modal) modal.hide();
                     }
-                }, 4000);
+                }, 3000);
             })
-            .catch((error) => {
-                alert("Gabim: " + error);
-            })
+            .catch((error) => alert("Gabim: " + error))
             .finally(() => {
                 submitBtn.disabled = false;
-                submitBtn.innerText = "DËRGO KËRKESËN";
+                submitBtn.innerText = originalText;
             });
         });
-    }
+    });
 });
 
 // 3. Përditësimi i Paketës së zgjedhur
