@@ -1032,3 +1032,81 @@ html {
     animation: slideInUp 0.5s ease-out;
 }
 
+/* CONTACT SUCCESS MESSAGE */
+.contact-success {
+  display: none;
+  margin-top: 30px;
+  padding: 30px;
+  border: 1px solid #198754;
+  background: rgba(25, 135, 84, 0.08);
+  text-align: center;
+  animation: fadeSlideUp 0.6s ease forwards;
+}
+
+.contact-success h5 {
+  color: #198754;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.contact-success p {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Checkmark animation */
+.checkmark-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #198754;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.4s ease;
+}
+
+.checkmark {
+  width: 28px;
+  height: 14px;
+  border-left: 4px solid #198754;
+  border-bottom: 4px solid #198754;
+  transform: rotate(-45deg);
+  animation: drawCheck 0.4s ease forwards;
+}
+
+/* Animations */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes drawCheck {
+  from {
+    width: 0;
+    height: 0;
+  }
+  to {
+    width: 28px;
+    height: 14px;
+  }
+}
+

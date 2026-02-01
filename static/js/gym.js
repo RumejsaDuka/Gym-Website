@@ -1,6 +1,8 @@
-// 1. Menaxhimi i Navbarit (Scroll)
+// 1. Navbar Scroll Effect
 window.addEventListener("scroll", () => {
   const nav = document.querySelector(".navbar");
+  if (!nav) return;
+
   if (window.scrollY > 50) {
     nav.style.padding = "10px 0";
     nav.style.background = "rgba(0, 0, 0, 0.95)";
@@ -10,22 +12,19 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// 2. Dërgimi i Formës me AJAX (Që të mos largohet nga faqja)
-document.addEventListener("DOMContentLoaded", function () {
-  // Kapim të gjitha format që kanë Netlify-true
+// 2. NETLIFY FORMS – AJAX (Contact + Registration)
+document.addEventListener("DOMContentLoaded", () => {
   const forms = document.querySelectorAll('form[data-netlify="true"]');
 
   forms.forEach((form) => {
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const myForm = e.target;
-      const formData = new FormData(myForm);
-      const submitBtn = myForm.querySelector('button[type="submit"]');
-      const successDiv = myForm.querySelector("#confirmationMessage"); // Kërkon div-in brenda kësaj forme
+      const formData = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerText;
 
       submitBtn.disabled = true;
-      const originalText = submitBtn.innerText;
       submitBtn.innerText = "Duke u dërguar...";
 
       fetch("/", {
@@ -34,36 +33,48 @@ document.addEventListener("DOMContentLoaded", function () {
         body: new URLSearchParams(formData).toString(),
       })
         .then(() => {
-          // Shfaq mesazhin nëse ekziston
-          if (successDiv) {
-            successDiv.style.display = "block";
-          } else {
-            alert("Regjistrimi u krye me sukses!");
+          // ==========================
+          // CONTACT FORM CONFIRMATION
+          // ==========================
+          if (form.name === "contact-general") {
+            const msg = document.getElementById("contactConfirmationMessage");
+
+            form.style.display = "none";
+            msg.style.display = "block";
           }
 
-          myForm.reset();
+          // ==========================
+          // REGISTRATION FORM (MODAL)
+          // ==========================
+          if (form.name === "regjistrim-palestra") {
+            const registrationForm =
+              document.getElementById("registrationForm");
+            const confirmationMessage = document.getElementById(
+              "confirmationMessage",
+            );
 
-          setTimeout(() => {
-            if (successDiv) successDiv.style.display = "none";
-
-            // Mbyll modalin nëse forma ishte brenda një materiali modal
-            const modalElement = document.getElementById("planModal");
-            if (modalElement) {
-              const modal = bootstrap.Modal.getInstance(modalElement);
-              if (modal) modal.hide();
+            if (registrationForm && confirmationMessage) {
+              registrationForm.style.display = "none";
+              confirmationMessage.style.display = "block";
             }
-          }, 3000);
-          const registrationForm = document.getElementById("registrationForm");
-          const confirmationMessage = document.getElementById(
-            "confirmationMessage",
-          );
 
-          if (registrationForm && confirmationMessage) {
-            registrationForm.style.display = "none";
-            confirmationMessage.style.display = "block";
+            form.reset();
+
+            setTimeout(() => {
+              const modalElement = document.getElementById("planModal");
+              if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) modal.hide();
+              }
+
+              if (registrationForm && confirmationMessage) {
+                registrationForm.style.display = "block";
+                confirmationMessage.style.display = "none";
+              }
+            }, 3500);
           }
         })
-        .catch((error) => alert("Gabim: " + error))
+        .catch(() => alert("Ndodhi një gabim. Ju lutem provoni përsëri."))
         .finally(() => {
           submitBtn.disabled = false;
           submitBtn.innerText = originalText;
@@ -72,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// 3. Përditësimi i Paketës së zgjedhur
+// 3. Paketat
 function updatePlanName(planName) {
   const planText = document.getElementById("selectedPlanText");
   const planInput = document.getElementById("hiddenPlanInput");
@@ -81,66 +92,56 @@ function updatePlanName(planName) {
   if (planInput) planInput.value = planName;
 }
 
-// 4. Detajet e Shërbimeve (Modal)
+// 4. Service Modal
 const serviceDetails = {
   body: {
     title: "Bodybuilding",
-    text: "Arritni fizikun që keni ëndërruar gjithmonë. Ambienti ynë ofron atmosferën perfekte për disiplinë dhe rritje maksimale.",
+    text: "Arritni fizikun që keni ëndërruar gjithmonë.",
     points: [
-      "Hapësirë e dedikuar për pesha të lira",
-      "Makineri profesionale Panatta",
-      "Konsulta falas për suplementet",
+      "Hapësirë e dedikuar për pesha",
+      "Makineri profesionale",
+      "Konsulta falas",
     ],
   },
   cross: {
     title: "Crossfit",
-    text: "Sfidoni veten në një sport që kombinon forcën dhe qëndrueshmërinë.",
+    text: "Sfidoni veten çdo ditë.",
     points: [
-      "Plan ushqimor i personalizuar",
-      "Klasa në grup me energji të lartë",
+      "Klasa intensive",
       "Trajnerë të certifikuar",
+      "Program i personalizuar",
     ],
   },
   personal: {
     title: "Trajnim Personal",
-    text: "Me një trajner personal, ju eliminoni hamendësimet dhe fokusoheni 100% te rezultatet.",
-    points: [
-      "Program unik stërvitor",
-      "Ndjekje rigoroze e progresit",
-      "Fleksibilitet me oraret",
-    ],
+    text: "Fokus total tek rezultatet.",
+    points: ["Program unik", "Ndjekje progresi", "Orar fleksibël"],
   },
 };
 
 function openModal(type) {
-  const data = serviceDetails[type];
   const modal = document.getElementById("serviceModal");
+  const data = serviceDetails[type];
 
   document.getElementById("modalTitle").innerText = data.title;
   document.getElementById("modalText").innerText = data.text;
 
   let listHTML = "";
-  data.points.forEach((point) => (listHTML += `<li>✅ ${point}</li>`));
+  data.points.forEach((p) => (listHTML += `<li>✅ ${p}</li>`));
   listHTML += `<br><a href="#contact" onclick="closeModal()" class="btn-regjistro-modal">REGJISTROHU TANI</a>`;
   document.getElementById("modalList").innerHTML = listHTML;
 
   modal.style.display = "flex";
-  setTimeout(() => {
-    modal.classList.add("active");
-  }, 10);
+  setTimeout(() => modal.classList.add("active"), 10);
 }
 
 function closeModal() {
   const modal = document.getElementById("serviceModal");
   modal.classList.remove("active");
-  setTimeout(() => {
-    modal.style.display = "none";
-  }, 400);
+  setTimeout(() => (modal.style.display = "none"), 300);
 }
 
-window.addEventListener("click", function (event) {
+window.addEventListener("click", (e) => {
   const modal = document.getElementById("serviceModal");
-  if (event.target === modal) {
-    closeModal();
-  }
+  if (e.target === modal) closeModal();
 });
