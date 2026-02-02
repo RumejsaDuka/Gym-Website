@@ -931,9 +931,18 @@ html {
     }
 }
 
+
+#contactFormContainer, #map-container {
+    height: 100%;
+}
 /* Animacion për contact confirmation */
-#contactConfirmation {
-    animation: slideInUp 0.5s ease-out;
+#contactConfirmationMessage {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 /* Animacioni për formën e kontaktit */
@@ -1048,10 +1057,6 @@ html {
     100% { width: 47px; right: 8px; top: 38px; }
 }
 
-#contactConfirmation {
-    animation: slideInUp 0.5s ease-out;
-}
-
 /* CONTACT SUCCESS MESSAGE */
 .contact-success {
   display: none;
@@ -1130,12 +1135,87 @@ html {
   }
 }
 
-/* Container-i kryesor me hije kreative */
+/* Container Kryesor */
 .contact-box-wrapper {
-    box-shadow: 0 20px 80px rgba(255, 0, 0, 0.15); /* Hije e lehtë e kuqe neon */
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
+    min-height: 400px; /* E bën më të shkurtër */
+    max-height: 450px;
+    display: flex;
+    align-items: stretch;
+}
+
+/* Stilimi i Inputeve (Floating Labels) */
+.input-group-modern {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-control-elite {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: none;
+    border-bottom: 2px solid #eee;
+    background: transparent;
+    transition: 0.3s;
+    outline: none;
+}
+
+.input-group-modern i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.input-group-modern label {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+/* Efekti kur klikon inputin */
+.form-control-elite:focus ~ label,
+.form-control-elite:not(:placeholder-shown) ~ label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.75rem;
+    color: #d60000;
+    font-weight: bold;
+}
+
+.form-control-elite:focus {
+    border-bottom-color: #d60000;
+}
+
+/* Butoni Elite */
+.btn-elite-submit {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.4s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-elite-submit:hover {
+    background: #d60000;
+    transform: translateY(-3px);
+}
+
+/* Harta - Grayscale Mode për tu përshtatur me Gym */
+#map-container iframe {
+    filter: grayscale(100%) invert(90%) contrast(90%);
 }
 
 /* Stilimi i Input-eve */
