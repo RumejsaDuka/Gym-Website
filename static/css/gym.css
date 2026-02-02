@@ -1157,6 +1157,8 @@ html {
     background: transparent;
     transition: 0.3s;
     outline: none;
+    color: white !important;
+    background-color: transparent !important;
 }
 
 .input-group-modern i {
@@ -1185,11 +1187,34 @@ html {
     font-size: 0.75rem;
     color: #d60000;
     font-weight: bold;
+    color: rgba(255, 255, 255, 0.5) !important;
+
 }
 
 .form-control-elite:focus {
+    color: white !important; /* Teksti që shkruan */
+    background-color: transparent !important;
     border-bottom-color: #d60000;
 }
+
+/* Rregullon ngjyrën e tekstit kur shfletuesi bën "Auto-fill" (kur emri/emaili del gati) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+/* Ngjyra e placeholder-it (teksti ndihmës brenda kutisë) */
+.form-control-elite::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
 
 /* Butoni Elite */
 .btn-elite-submit {
