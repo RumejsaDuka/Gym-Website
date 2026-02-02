@@ -104,6 +104,7 @@ function openModal(type) {
     
     document.getElementById("modalList").innerHTML = listHTML;
 
+    // Rregullimi këtu:
     modal.style.display = "flex"; 
     setTimeout(() => {
         modal.classList.add("active");
