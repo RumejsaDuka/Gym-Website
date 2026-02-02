@@ -169,13 +169,20 @@ body {
 .contact-section .bg-white {
     background: #ffffff !important;
     border-radius: 15px 0 0 15px;
+    padding: 20px 40px !important; /*per ta bere me te shkurter */
     position: relative;
 }
 
 /* Groupi i inputit që mban labelin dhe ikonën */
 .input-group-modern {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 20px; /*nga 25 ne 20 */
+}
+
+#contact .row.g-0 iframe, 
+#contact .row.g-0 {
+    min-height: 350px !important; /* Lartësia e re më kompakte */
+    max-height: 400px !important;
 }
 
 /* Inputet bazë */
