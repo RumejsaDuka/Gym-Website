@@ -170,56 +170,62 @@
         <div class="container">
             <div class="contact-box-wrapper row g-0">
                 <div id="contactFormContainer" class="col-lg-6 p-4 p-md-5 d-flex flex-column justify-content-center">
-                    <h2 class="text-uppercase fw-bold mb-2">Na Kontaktoni</h2>
-                    <p class="text-secondary mb-4 small">Plotësoni formën për të marrë një ofertë të personalizuar.</p>
+                    <div id="contactFormContent">
+                        <h2 class="text-uppercase fw-bold mb-2 text-white">Na Kontaktoni</h2>
+                        <p class="text-secondary mb-4 small">Plotësoni formën për të marrë një ofertë të personalizuar.
+                        </p>
 
-                    <form id="contactForm" name="contact-general" method="POST" data-netlify="true">
-                        <input type="hidden" name="form-name" value="contact-general">
+                        <form id="contactForm" name="contact-general" method="POST" data-netlify="true">
+                            <input type="hidden" name="form-name" value="contact-general">
 
-                        <div class="input-group-modern">
-                            <input type="text" name="name" class="form-control-elite" placeholder=" " required>
-                            <label>Emri i Plotë</label>
-                            <i class="bi bi-person"></i>
-                        </div>
+                            <div class="input-group-modern">
+                                <input type="text" name="name" class="form-control-elite" placeholder=" " required>
+                                <label>Emri i Plotë</label>
+                                <i class="bi bi-person"></i>
+                            </div>
 
-                        <div class="input-group-modern">
-                            <input type="email" name="email" class="form-control-elite" placeholder=" " required>
-                            <label>Email</label>
-                            <i class="bi bi-envelope"></i>
-                        </div>
+                            <div class="input-group-modern">
+                                <input type="email" name="email" class="form-control-elite" placeholder=" " required>
+                                <label>Email</label>
+                                <i class="bi bi-envelope"></i>
+                            </div>
 
-                        <div class="input-group-modern mb-4">
-                            <textarea name="message" class="form-control-elite" rows="3" placeholder=" "
-                                required></textarea>
-                            <label>Mesazhi Juaj</label>
-                            <i class="bi bi-chat-dots"></i>
-                        </div>
+                            <div class="input-group-modern mb-4">
+                                <textarea name="message" class="form-control-elite" rows="3" placeholder=" "
+                                    required></textarea>
+                                <label>Mesazhi Juaj</label>
+                                <i class="bi bi-chat-dots"></i>
+                            </div>
 
-                        <button type="submit" class="btn-elite-submit">
-                            <span>DËRGO MESAZHIN</span>
-                            <i class="bi bi-send-fill"></i>
-                        </button>
-                    </form>
-                                <div id="contactConfirmationMessage" style="display: none;">
-                <div class="contact-success-creative">
-                    <div class="success-icon-box">
-                        <i class="bi bi-check2"></i>
+                            <button type="submit" class="btn-elite-submit">
+                                <span>DËRGO MESAZHIN</span>
+                                <i class="bi bi-send-fill"></i>
+                            </button>
+                        </form>
                     </div>
-                    <h4>Mesazhi u dërgua!</h4>
-                    <p>Do t'ju kontaktojmë së shpejti.</p>
-                </div>
-            </div>
-                </div>
 
-                <div class="col-lg-6">
-                    <div id="map-container">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.933515483603!2d19.832260075355578!3d41.332059049426356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135031367e1f74e5%3A0x14d38f9c91cadf88!2sBRRYLI!5e0!3m2!1ssq!2s!4v1770053074900!5m2!1ssq!2s"
-                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe> 
+                    <div id="contactConfirmationMessage" style="display: none;">
+                        <div class="contact-success-creative text-center">
+                            <div class="success-icon-box mx-auto mb-3">
+                                <i class="bi bi-check2"></i>
+                            </div>
+                            <h4 class="text-white">Mesazhi u dërgua!</h4>
+                            <p class="text-secondary">Do t'ju kontaktojmë së shpejti.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div id="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.933515483603!2d19.832260075355578!3d41.332059049426356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135031367e1f74e5%3A0x14d38f9c91cadf88!2sBRRYLI!5e0!3m2!1ssq!2s!4v1770053074900!5m2!1ssq!2s"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        </div>
 
         </div>
     </section>
