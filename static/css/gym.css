@@ -1213,10 +1213,6 @@ html {
     transform: translateY(-3px);
 }
 
-/* Harta - Grayscale Mode për tu përshtatur me Gym */
-#map-container iframe {
-    filter: grayscale(100%) invert(90%) contrast(90%);
-}
 
 /* Stilimi i Input-eve */
 .creative-input {
