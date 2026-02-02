@@ -161,151 +161,19 @@ body {
     font-family: 'Oswald', sans-serif;
 }
 
-/* ============================================
-   KONTAKTI ELITE - STILIMI I RI
-   ============================================ */
-
-/* Container-i kryesor i formës */
-.contact-section .bg-white {
-    background: #ffffff !important;
-    border-radius: 15px 0 0 15px;
-    padding: 20px 40px !important; /*per ta bere me te shkurter */
-    position: relative;
+/* Stilimi i Input-eve të formës */
+.contact-section .form-control {
+    background-color: transparent;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
-/* Groupi i inputit që mban labelin dhe ikonën */
-.input-group-modern {
-    position: relative;
-    margin-bottom: 20px; /*nga 25 ne 20 */
-}
-
-#contact .row.g-0 iframe, 
-#contact .row.g-0 {
-    min-height: 350px !important; /* Lartësia e re më kompakte */
-    max-height: 400px !important;
-}
-
-/* Inputet bazë */
-.form-control-elite {
-    width: 100%;
-    padding: 12px 15px 12px 40px;
-    border: none;
-    border-bottom: 2px solid #ddd;
-    background: transparent;
-    border-radius: 0;
-    outline: none;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-    color: #000;
-}
-
-/* Ikonat brenda inputit */
-.input-group-modern i {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    transition: 0.3s;
-    font-size: 1.1rem;
-}
-
-.input-group-modern textarea ~ i {
-    top: 25px;
-}
-
-/* Labeli që lëviz (Floating Label) */
-.input-group-modern label {
-    position: absolute;
-    left: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
-    transition: 0.3s ease all;
-}
-
-/* Efekti kur klikon ose shkruan në input */
-.form-control-elite:focus ~ label,
-.form-control-elite:not(:placeholder-shown) ~ label {
-    top: -10px;
-    left: 5px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #d60000; /* Ngjyra jote neon */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.form-control-elite:focus {
-    border-bottom-color: #d60000;
+.contact-section .form-control:focus {
+    background-color: #f8f9fa;
+    border-color: #000;
     box-shadow: none;
 }
 
-.form-control-elite:focus ~ i {
-    color: #d60000;
-}
-
-/* Butoni Dërgo Mesazhin */
-.btn-elite-submit {
-    background: #000;
-    color: #fff;
-    border: 2px solid #000;
-    padding: 14px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: 0.4s;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-elite-submit:hover {
-    background: #d60000;
-    border-color: #d60000;
-    color: #fff;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(214, 0, 0, 0.3);
-}
-
-/* Përshtatja për Hartën */
-#map-container {
-    border-radius: 0 15px 15px 0;
-    overflow: hidden;
-    min-height: 450px;
-}
-
-/* Mesazhi i suksesit (Creative Success) */
-.contact-success-creative {
-    text-align: center;
-    padding: 40px;
-    background: #fff;
-}
-
-.success-icon-box {
-    width: 80px;
-    height: 80px;
-    background: #28a745;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    margin: 0 auto 20px;
-    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
-    animation: bounceIn 0.6s ease;
-}
-
-@keyframes bounceIn {
-    0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.05); }
-    70% { transform: scale(0.9); }
-    100% { transform: scale(1); opacity: 1; }
-}
 /* Sigurohemi që rreshti g-0 (gap zero) të mos ketë hapësirë mes formës dhe hartës */
 .contact-section .row.g-0 {
     box-shadow: 0 0 40px rgba(0,0,0,0.5);
@@ -578,73 +446,156 @@ html {
 }
 
 /* Stilimi i Modal-it (Dritares) */
-/* Stili për Modalin e Shërbimeve */
-.service-modal {
-    display: none; /* Do të ndryshohet nga JS */
+.modal-custom {
+    display: none;
     position: fixed;
-    z-index: 10000; /* Shumë i lartë që të dalë mbi navbar */
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Sfond i zi transparent */
-    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.85);
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
-.service-modal.active {
-    display: flex;
-    opacity: 1;
-}
-
-.service-modal-content {
-    background: #111;
-    border: 1px solid #d60000;
-    border-radius: 20px;
+.modal-dialog-custom {
+    background-color: #1a1a1a;
+    border: 2px solid #d60000;
+    border-radius: 15px;
     width: 90%;
     max-width: 500px;
-    padding: 40px;
+    padding: 25px;
     position: relative;
-    color: white;
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
+    box-shadow: 0 0 25px rgb(222, 0, 0);
+    animation: fadeIn 0.3s ease-out;
 }
 
-.service-modal.active .service-modal-content {
-    transform: scale(1);
+.modal-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.service-modal-content .close {
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    font-size: 30px;
-    color: white;
+.modal-header-custom h2 {
+    color: #d40000;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.btn-close-custom {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
     cursor: pointer;
+    line-height: 1;
 }
 
-.service-modal-content h3 {
-    color: #d60000;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-bottom: 15px;
+.btn-close-custom:hover {
+    color: #eb0000d5;
 }
 
-#modalList {
+.modal-body-custom p {
+    color: #ddd;
+    line-height: 1.6;
+}
+
+.modal-body-custom ul {
     list-style: none;
-    padding: 0;
+    padding-left: 0;
     margin-top: 20px;
 }
 
-#modalList li {
+.modal-body-custom li {
+    color: #fff;
     margin-bottom: 10px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 3px solid #d60000;
+    font-size: 1rem;
 }
+
+/* Animacioni për hapjen */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sfondi i zi që mjegullon faqen prapa */
+.modal-custom {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dritarja që zmadhohet */
+.modal-dialog-custom {
+    background: #111;
+    border: 1px solid rgba(246, 8, 0, 0.5);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(255, 204, 0, 0.15);
+    
+    /* Animacioni i zmadhimit */
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Kur modal-i është aktiv, zmadhohet në madhësinë normale */
+.modal-custom.active .modal-dialog-custom {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-header-custom h2 {
+    color: #eeeeee;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.modal-body-custom li {
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    border-left: 3px solid rgb(255, 255, 255);
+    color: #fff;
+    list-style: none;
+}
+
+.btn-regjistro-modal {
+    display: block;
+    background-color:rgb(255, 255, 255);
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-regjistro-modal:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+}
+
 /* ============================================
    ANIMACIONI I KONFIRMIMIT TË REGJISTRIMIT
    ============================================ */
@@ -1239,4 +1190,3 @@ html {
     from { opacity: 0; transform: scale(0.8); }
     to { opacity: 1; transform: scale(1); }
 }
-
