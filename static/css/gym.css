@@ -1292,15 +1292,3 @@ textarea:-webkit-autofill:focus {
     to { opacity: 1; transform: scale(1); }
 }
 
-#contactFormContainer {
-    min-height: 450px; /* Siguron që kutia të mos mblidhet kur forma fshihet */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#contactConfirmationMessage {
-    /* Qendron mesazhin e suksesit në mes të kutisë 450px */
-    width: 100%;
-    margin: auto 0; 
-}
