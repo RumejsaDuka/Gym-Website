@@ -89,9 +89,11 @@ function openModal(type) {
     
     document.getElementById("modalList").innerHTML = listHTML;
 
-    modal.style.display = "flex";
-    // Pak vonesë për animacionin CSS (fade in)
-    setTimeout(() => modal.classList.add("active"), 10);
+    // Rregullimi këtu:
+    modal.style.display = "flex"; 
+    setTimeout(() => {
+        modal.classList.add("active");
+    }, 10);
 }
 
 function closeModal() {
