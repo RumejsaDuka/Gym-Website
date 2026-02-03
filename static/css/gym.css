@@ -1293,7 +1293,7 @@ textarea:-webkit-autofill:focus {
 }
 
 /* Sigurohu që kjo pjesë është në CSS */
-/* .service-modal {
+.service-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -1306,9 +1306,9 @@ textarea:-webkit-autofill:focus {
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-} */
+}
 
-/* .service-modal.active {
+.service-modal.active {
     display: flex !important;
     opacity: 1;
 }
@@ -1321,4 +1321,4 @@ textarea:-webkit-autofill:focus {
     width: 90%;
     position: relative;
     color: white;
-} */
+}

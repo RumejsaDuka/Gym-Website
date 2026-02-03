@@ -110,19 +110,26 @@ const serviceDetails = {
 };
 
 function openModal(type) {
+  const modal = document.getElementById("serviceModal");
   const data = serviceDetails[type];
-  if (!data) return;
 
-  // Mbushim titullin dhe tekstin
+  if (!data || !modal) return;
+
   document.getElementById("modalTitle").innerText = data.title;
   document.getElementById("modalText").innerText = data.text;
 
-  // Mbushim listën me pikat
   let listHTML = "";
   data.points.forEach((p) => {
-    listHTML += `<li class="mb-2"><i class="bi bi-check2-circle text-danger me-2"></i>${p}</li>`;
+    listHTML += `<li><i class="bi bi-check2-circle text-danger me-2"></i>${p}</li>`;
   });
+
   document.getElementById("modalList").innerHTML = listHTML;
+
+  // Rregullimi këtu:
+  modal.style.display = "flex";
+  setTimeout(() => {
+    modal.classList.add("active");
+  }, 10);
 }
 
 function closeModal() {
