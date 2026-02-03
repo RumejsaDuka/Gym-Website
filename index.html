@@ -207,7 +207,7 @@
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.933515483603!2d19.832260075355578!3d41.332059049426356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135031367e1f74e5%3A0x14d38f9c91cadf88!2sBRRYLI!5e0!3m2!1ssq!2s!4v1770053074900!5m2!1ssq!2s"
                             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe> 
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -244,56 +244,62 @@
 
     <div class="modal fade" id="planModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark text-white border-secondary">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title text-uppercase fw-bold">Regjistrim</h5>
+            <div class="modal-content custom-modal-dark border-0">
+                <div class="modal-header border-0 pb-0">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-box-red me-3">
+                            <i class="bi bi-person-plus-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title text-uppercase fw-bold mb-0">Regjistrim</h5>
+                            <p id="selectedPlanText" class="text-danger small fw-bold mb-0 text-uppercase"></p>
+                        </div>
+                    </div>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+
+                <div class="modal-body py-4">
                     <div id="registrationForm">
-                        <p id="selectedPlanText" class="text-danger fw-bold text-uppercase"></p>
+                        <p class="text-secondary small mb-4">Plotësoni të dhënat më poshtë për të rezervuar vendin tuaj
+                            në Fusion Gym.</p>
 
                         <form id="gymForm" name="regjistrim-palestra" method="POST" data-netlify="true">
                             <input type="hidden" name="form-name" value="regjistrim-palestra">
                             <input type="hidden" id="hiddenPlanInput" name="paketa">
 
-                            <div class="mb-3">
-                                <label class="form-label">Emri i Plotë</label>
-                                <input type="text" name="emri"
-                                    class="form-control bg-transparent text-white border-secondary" required>
+                            <div class="input-group-modern mb-3">
+                                <label class="form-label small text-uppercase text-secondary">Emri i Plotë</label>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-person"></i>
+                                    <input type="text" name="emri" class="form-control-elite"
+                                        placeholder="Filan Fisteku" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Numri i Telefonit</label>
-                                <input type="tel" name="telefoni"
-                                    class="form-control bg-transparent text-white border-secondary" required>
+
+                            <div class="input-group-modern mb-4">
+                                <label class="form-label small text-uppercase text-secondary">Numri i Telefonit</label>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-telephone"></i>
+                                    <input type="tel" name="telefoni" class="form-control-elite"
+                                        placeholder="06X XX XX XXX" required>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-danger w-100 fw-bold py-2">DËRGO KËRKESËN</button>
+
+                            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold text-uppercase">
+                                Konfirmo Regjistrimin <i class="bi bi-chevron-right ms-2"></i>
+                            </button>
                         </form>
                     </div>
 
                     <div id="confirmationMessage" style="display: none;" class="text-center py-4">
-                        <div class="mb-4">
-                            <div class="success-checkmark mx-auto mb-4">
-                                <div class="check-icon">
-                                    <span class="icon-line line-tip"></span>
-                                    <span class="icon-line line-long"></span>
-                                    <div class="icon-circle"></div>
-                                    <div class="icon-fix"></div>
-                                </div>
-                            </div>
+                        <div class="success-checkmark-simple mb-4">
+                            <i class="bi bi-check-circle-fill text-success display-1"></i>
                         </div>
-
-                        <h3 class="text-white fw-bold mb-3">Faleminderit për Regjistrimin!</h3>
-                        <p class="text-secondary mb-4">Regjistrimi juaj është pranuar me sukses.</p>
-
-                        <div class="alert alert-info bg-transparent border border-info text-white mb-4">
-                            <i class="bi bi-telephone-fill me-2"></i>
-                            <strong>Do të telefonohemi nga ne sa më shpejti!</strong>
-                        </div>
-
-                        <button type="button" class="btn btn-outline-light rounded-0 px-4" data-bs-dismiss="modal">
-                            <i class="bi bi-check-circle me-2"></i>MBYLL
-                        </button>
+                        <h3 class="text-white fw-bold mb-2">Faleminderit!</h3>
+                        <p class="text-secondary mb-4">Kërkesa u dërgua me sukses. Do t'ju kontaktojmë brenda pak
+                            minutash.</p>
+                        <button type="button" class="btn btn-outline-light rounded-0 px-5"
+                            data-bs-dismiss="modal">MBYLL</button>
                     </div>
                 </div>
             </div>
