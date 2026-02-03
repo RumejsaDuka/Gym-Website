@@ -1323,40 +1323,36 @@ textarea:-webkit-autofill:focus {
     color: white;
 }
 
-/* Sfondi i modalit */
+/* Stili i inputeve brenda modalit */
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 15px;
+    color: #670000;
+}
+
+.form-control-elite {
+    background: #151515 !important;
+    border: 1px solid #333 !important;
+    color: white !important;
+    padding: 12px 12px 12px 45px !important;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-control-elite:focus {
+    border-color: #670000 !important;
+    box-shadow: none !important;
+    outline: none;
+}
+
+/* Modali Dark (përdor të njëjtin si te shërbimet) */
 .custom-modal-dark {
-    background-color: #0a0a0a; /* E zezë e thellë */
-    border: 1px solid #222;    /* Kornizë shumë e hollë dhe diskrete */
-    border-radius: 0;          /* Kantiere të mprehta për stil më agresiv */
-}
-
-/* Kutia e ikonës pranë titullit */
-.icon-box-red {
-    background-color: #670000;
-    color: white;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-/* Stili i listës së karakteristikave */
-#modalList li {
-    padding: 8px 0;
-    border-bottom: 1px solid #1a1a1a;
-    font-size: 0.95rem;
-    color: #ddd;
-    display: flex;
-    align-items: center;
-}
-
-#modalList li:last-child {
-    border-bottom: none;
-}
-
-#modalList li i {
-    color: #670000; /* Ngjyra e kuqe e errët e logos tënde */
-    margin-right: 12px;
+    background-color: #0a0a0a;
+    border: 1px solid #222;
 }
